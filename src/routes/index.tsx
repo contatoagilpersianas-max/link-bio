@@ -219,31 +219,6 @@ function BioPage() {
             </a>
           </div>
 
-          <div className="colors-section">
-            <div className="colors-title">Cores · Blackout Texturizado</div>
-            <div className="colors-grid">
-              <div className="color-chip">
-                <div className="swatch branco" />
-                <span className="color-name">Branco</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch light-green" />
-                <span className="color-name">Light Green</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch bege" />
-                <span className="color-name">Bege</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch marron" />
-                <span className="color-name">Marron</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch cinza" />
-                <span className="color-name">Cinza</span>
-              </div>
-            </div>
-          </div>
 
           <footer className="bio-footer">Ágil Persianas</footer>
         </main>
