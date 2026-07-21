@@ -242,13 +242,37 @@ function BioPage() {
             >
               ×
             </button>
-            <img
-              src={blackoutCoresAsset.url}
-              alt="Cores disponíveis do Blackout Texturizado: Branco, Light Green, Bege, Marron, Cinza"
+            <div
+              className="cores-panel"
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <div className="colors-title">Cores · Blackout Texturizado</div>
+              <div className="colors-grid">
+                <div className="color-chip">
+                  <div className="swatch branco" />
+                  <span className="color-name">Branco</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch light-green" />
+                  <span className="color-name">Light Green</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch bege" />
+                  <span className="color-name">Bege</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch marron" />
+                  <span className="color-name">Marron</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch cinza" />
+                  <span className="color-name">Cinza</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
+
       </div>
     </>
   );
