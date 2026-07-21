@@ -137,10 +137,16 @@ function BioPage() {
           padding:20px; z-index:50; cursor:zoom-out;
           animation: fadein .2s ease-out;
         }
-        .lightbox img{
-          max-width:100%; max-height:90vh;
-          border-radius:14px; box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+        .cores-panel{
+          background: var(--surface);
+          border-radius: 20px;
+          padding: 24px 22px 22px;
+          width: 100%; max-width: 380px;
+          box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+          cursor: auto;
         }
+        .cores-panel .colors-title{ text-align:center; margin-bottom:16px; }
+
         .lightbox-close{
           position:absolute; top:20px; right:20px;
           width:40px; height:40px; border-radius:50%;
