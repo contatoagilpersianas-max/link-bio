@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import avatarAsset from "@/assets/avatar.png.asset.json";
+import blackoutCoresAsset from "@/assets/blackout-cores2.png.asset.json";
 
 
 export const Route = createFileRoute("/")({
@@ -146,6 +147,10 @@ function BioPage() {
           cursor: auto;
         }
         .cores-panel .colors-title{ text-align:center; margin-bottom:16px; }
+        .cores-image{
+          width:100%; border-radius:14px; display:block; margin-bottom:16px;
+          box-shadow: 0 4px 14px oklch(0% 0 0 / 0.15);
+        }
 
         .lightbox-close{
           position:absolute; top:20px; right:20px;
@@ -253,6 +258,11 @@ function BioPage() {
               onClick={(e) => e.stopPropagation()}
             >
               <div className="colors-title">Cores · Blackout Texturizado</div>
+              <img
+                className="cores-image"
+                src={blackoutCoresAsset.url}
+                alt="Amostras de tecido Blackout Texturizado"
+              />
               <div className="colors-grid">
                 <div className="color-chip">
                   <div className="swatch branco" />
