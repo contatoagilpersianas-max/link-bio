@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import avatarAsset from "@/assets/avatar.png.asset.json";
-import blackoutCoresAsset from "@/assets/blackout-cores.png.asset.json";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
@@ -137,10 +137,16 @@ function BioPage() {
           padding:20px; z-index:50; cursor:zoom-out;
           animation: fadein .2s ease-out;
         }
-        .lightbox img{
-          max-width:100%; max-height:90vh;
-          border-radius:14px; box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+        .cores-panel{
+          background: var(--surface);
+          border-radius: 20px;
+          padding: 24px 22px 22px;
+          width: 100%; max-width: 380px;
+          box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
+          cursor: auto;
         }
+        .cores-panel .colors-title{ text-align:center; margin-bottom:16px; }
+
         .lightbox-close{
           position:absolute; top:20px; right:20px;
           width:40px; height:40px; border-radius:50%;
@@ -219,31 +225,6 @@ function BioPage() {
             </a>
           </div>
 
-          <div className="colors-section">
-            <div className="colors-title">Cores · Blackout Texturizado</div>
-            <div className="colors-grid">
-              <div className="color-chip">
-                <div className="swatch branco" />
-                <span className="color-name">Branco</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch light-green" />
-                <span className="color-name">Light Green</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch bege" />
-                <span className="color-name">Bege</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch marron" />
-                <span className="color-name">Marron</span>
-              </div>
-              <div className="color-chip">
-                <div className="swatch cinza" />
-                <span className="color-name">Cinza</span>
-              </div>
-            </div>
-          </div>
 
           <footer className="bio-footer">Ágil Persianas</footer>
         </main>
@@ -267,13 +248,37 @@ function BioPage() {
             >
               ×
             </button>
-            <img
-              src={blackoutCoresAsset.url}
-              alt="Cores disponíveis do Blackout Texturizado: Branco, Light Green, Bege, Marron, Cinza"
+            <div
+              className="cores-panel"
               onClick={(e) => e.stopPropagation()}
-            />
+            >
+              <div className="colors-title">Cores · Blackout Texturizado</div>
+              <div className="colors-grid">
+                <div className="color-chip">
+                  <div className="swatch branco" />
+                  <span className="color-name">Branco</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch light-green" />
+                  <span className="color-name">Light Green</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch bege" />
+                  <span className="color-name">Bege</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch marron" />
+                  <span className="color-name">Marron</span>
+                </div>
+                <div className="color-chip">
+                  <div className="swatch cinza" />
+                  <span className="color-name">Cinza</span>
+                </div>
+              </div>
+            </div>
           </div>
         )}
+
       </div>
     </>
   );
