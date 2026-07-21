@@ -1,7 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
 import avatarAsset from "@/assets/avatar.png.asset.json";
-import blackoutCoresAsset from "@/assets/blackout-cores.png.asset.json";
+
 
 export const Route = createFileRoute("/")({
   head: () => ({
