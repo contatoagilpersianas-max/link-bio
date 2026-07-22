@@ -1,21 +1,18 @@
-## Objetivo
-Corrigir o botão "Fazer orçamento pelo WhatsApp" para que abra o WhatsApp já com a mensagem pronta, sem cair na tela de bloqueio do `api.whatsapp.com`.
+## Plano
 
-## Diagnóstico
-O link atual já usa `https://wa.me/553235210281?text=...`, que é o formato correto. O erro `api.whatsapp.com está bloqueado / ERR_BLOCKED_BY_RESPONSE` aparece porque:
-1. O clique está sendo aberto dentro do iframe de preview do Lovable, e o WhatsApp bloqueia carregamento em iframes (política de frame-ancestors).
-2. Em alguns casos, `wa.me` faz um redirect intermediário para `api.whatsapp.com` que também é bloqueado dentro de iframes.
+1. **Corrigir o WhatsApp bloqueado**
+   - Trocar o botão com `window.open()` por um link `<a>` direto para o WhatsApp.
+   - Usar `https://api.whatsapp.com/send?phone=553235210281&text=...`, que costuma funcionar melhor em previews/iframes e já abre com a mensagem pronta.
+   - Remover `noreferrer` do link do WhatsApp, mantendo abertura em nova aba.
 
-No site publicado (fora do preview) o link funciona normalmente. Mesmo assim, dá para deixar o clique mais robusto.
+2. **Melhorar a página sem mudar a estrutura principal**
+   - Deixar os botões mais profissionais e legíveis no mobile.
+   - Melhorar o modal do “Blackout Texturizado” para valorizar a imagem das cores, com imagem maior e amostras organizadas.
+   - Corrigir pequenos textos/acentos, se necessário, mantendo o estilo da página atual.
 
-## Mudanças em `src/routes/index.tsx`
-1. Trocar a tag `<a>` do botão WhatsApp por um `<button>` com handler `onClick` que chama `window.open(url, "_blank", "noopener,noreferrer")`. Isso força a abertura em nova aba/janela do navegador (fora do iframe), evitando o bloqueio.
-2. Manter o texto pré-preenchido: `Olá! Quero um orçamento de persianas`.
-3. Manter classes/estilos `.link-btn.primary` para não mudar o visual.
-4. Nada mais é alterado (catálogo, cores, Instagram, layout).
+3. **Revisar links visíveis**
+   - O link “Ver catálogo completo” ainda aponta para `https://SEUSITE.com`; substituir por um link real se você me passar, ou deixar como está se ainda não tiver catálogo.
 
-## Observação para o usuário
-- No preview do Lovable o WhatsApp Web pode continuar mostrando bloqueio por causa do iframe — o teste real deve ser feito na URL publicada (`agilpersianas-bio.lovable.app`) ou abrindo o link em nova aba.
-
-## Sobre "excluir isso"
-Não ficou claro o que deve ser excluído (as imagens enviadas são: (1) a faixa de cores e (2) o print do erro do WhatsApp). Vou assumir que "isso" = a mensagem de erro do WhatsApp, ou seja, corrigir o comportamento do botão. Se você quis dizer excluir algum elemento da página (ex.: o bloco de cores, o botão de catálogo, etc.), me diga qual e eu ajusto o plano.
+4. **Validar no preview**
+   - Conferir se o botão do WhatsApp aparece como link real e abre a URL correta com a mensagem preenchida.
+   - Conferir se o modal do Blackout Texturizado continua abrindo corretamente.

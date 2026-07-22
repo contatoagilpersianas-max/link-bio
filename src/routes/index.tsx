@@ -20,6 +20,9 @@ export const Route = createFileRoute("/")({
 
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
+  const whatsappUrl =
+    "https://api.whatsapp.com/send?phone=553235210281&text=" +
+    encodeURIComponent("Olá! Quero um orçamento de persianas");
 
   return (
     <>
@@ -34,7 +37,7 @@ function BioPage() {
           --muted: oklch(46% 0.01 40);
           --whatsapp: oklch(60% 0.15 150);
           --whatsapp-dark: oklch(50% 0.14 150);
-          --radius: 18px;
+          --radius: 14px;
           background:
             radial-gradient(1200px 600px at 50% -10%, oklch(78% 0.15 60 / 0.18), transparent 60%),
             linear-gradient(180deg, oklch(95% 0.012 55) 0%, var(--bg) 360px);
@@ -56,7 +59,7 @@ function BioPage() {
         }
         .avatar img{ width:100%; height:100%; object-fit:contain; border-radius:50%; }
         .bio-main h1{
-          margin-top:18px; font-size:1.4rem; font-weight:700; letter-spacing:-0.02em; text-align:center;
+          margin-top:18px; font-size:1.4rem; font-weight:700; letter-spacing:0; text-align:center;
           opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.08s forwards;
         }
         .tagline{
@@ -65,13 +68,13 @@ function BioPage() {
         }
         .links{ width:100%; margin-top:32px; display:flex; flex-direction:column; gap:14px; }
         .link-btn{
-          display:flex; align-items:center; gap:14px; width:100%; padding:16px 20px;
-          border-radius:var(--radius); border:none; text-decoration:none;
+          display:flex; align-items:center; gap:14px; width:100%; min-height:70px; padding:16px 18px;
+          border-radius:var(--radius); border:1px solid oklch(90% 0.018 55); text-decoration:none;
           font-size:1rem; font-weight:600; color:var(--ink); background:var(--surface);
-          box-shadow: 0 1px 3px oklch(20% 0 0 / 0.08), 0 1px 2px oklch(20% 0 0 / 0.04);
-          transition: transform .25s cubic-bezier(0.22,1,0.36,1), box-shadow .25s cubic-bezier(0.22,1,0.36,1);
+          box-shadow: 0 8px 24px oklch(20% 0 0 / 0.07), 0 1px 2px oklch(20% 0 0 / 0.05);
+          transition: transform .25s cubic-bezier(0.22,1,0.36,1), box-shadow .25s cubic-bezier(0.22,1,0.36,1), border-color .25s ease;
           opacity:0; animation: rise .55s cubic-bezier(0.22,1,0.36,1) forwards;
-          cursor:pointer; font-family:inherit; text-align:left;
+          cursor:pointer; font-family:inherit; text-align:left; position:relative; overflow:hidden;
         }
         .link-btn:nth-of-type(1){ animation-delay:.20s; }
         .link-btn:nth-of-type(2){ animation-delay:.27s; }
@@ -79,22 +82,23 @@ function BioPage() {
         .link-btn:nth-of-type(4){ animation-delay:.41s; }
         .link-btn:active{ transform:scale(0.97); }
         @media (hover:hover){
-          .link-btn:hover{ transform:translateY(-2px); box-shadow: 0 8px 20px oklch(20% 0 0 / 0.12); }
+          .link-btn:hover{ transform:translateY(-2px); box-shadow: 0 12px 26px oklch(20% 0 0 / 0.12); border-color:oklch(83% 0.04 55); }
         }
+        .link-btn:focus-visible{ outline:3px solid oklch(64% 0.19 45 / 0.35); outline-offset:3px; }
         .link-btn.primary{
           background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
-          color:white;
+          color:white; border-color:oklch(60% 0.15 150 / 0.4);
           box-shadow: 0 8px 22px oklch(60% 0.15 150 / 0.35);
         }
         .link-btn.primary:hover{ box-shadow: 0 10px 26px oklch(60% 0.15 150 / 0.45); }
         .link-btn.brand{
           background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-          color:white;
+          color:white; border-color:oklch(64% 0.19 45 / 0.4);
           box-shadow: 0 8px 22px oklch(64% 0.19 45 / 0.32);
         }
         .link-btn.brand:hover{ box-shadow: 0 10px 26px oklch(64% 0.19 45 / 0.42); }
         .icon{ flex:0 0 auto; width:22px; height:22px; }
-        .label{ flex:1; text-align:left; }
+        .label{ flex:1; text-align:left; min-width:0; }
         .sub{ display:block; font-weight:400; font-size:.78rem; opacity:.85; margin-top:2px; }
 
         .colors-section{
@@ -140,16 +144,16 @@ function BioPage() {
         }
         .cores-panel{
           background: var(--surface);
-          border-radius: 20px;
-          padding: 24px 22px 22px;
-          width: 100%; max-width: 380px;
+          border-radius: 14px;
+          padding: 22px 18px 20px;
+          width: 100%; max-width: 430px;
           box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
           cursor: auto;
         }
-        .cores-panel .colors-title{ text-align:center; margin-bottom:16px; }
+        .cores-panel .colors-title{ text-align:center; margin-bottom:14px; }
         .cores-image{
-          width:100%; border-radius:14px; display:block; margin-bottom:16px;
-          box-shadow: 0 4px 14px oklch(0% 0 0 / 0.15);
+          width:100%; max-height:62vh; object-fit:contain; border-radius:10px; display:block; margin-bottom:16px;
+          box-shadow: 0 6px 18px oklch(0% 0 0 / 0.16);
         }
 
         .lightbox-close{
@@ -171,15 +175,11 @@ function BioPage() {
           <p className="tagline">Persianas sob medida · Instalação profissional</p>
 
           <div className="links">
-            <button
-              type="button"
+            <a
+              href={whatsappUrl}
               className="link-btn primary"
-              onClick={() => {
-                const url =
-                  "https://wa.me/553235210281?text=" +
-                  encodeURIComponent("Olá! Quero um orçamento de persianas");
-                window.open(url, "_blank", "noopener,noreferrer");
-              }}
+              target="_blank"
+              rel="noopener"
             >
               <svg className="icon" viewBox="0 0 24 24" fill="white">
                 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
@@ -188,7 +188,7 @@ function BioPage() {
                 Fazer orçamento pelo WhatsApp
                 <span className="sub">Resposta rápida, sem compromisso</span>
               </span>
-            </button>
+            </a>
 
             <a className="link-btn brand" href="https://SEUSITE.com" target="_blank" rel="noopener">
               <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2}>
