@@ -41,19 +41,25 @@ function BioPage() {
   const [showWaFallback, setShowWaFallback] = useState(false);
   const mensagem = "Olá! Quero um orçamento de persianas";
   const telefone = "553235210281";
-  const whatsappUrl =
-    "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
+  const buildWaUrl = (msg: string) =>
+    "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(msg);
+  const whatsappUrl = buildWaUrl(mensagem);
   const whatsappWebUrl =
     "https://web.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
 
-  const handleWhatsappClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    e.preventDefault();
-    const win = window.open(whatsappUrl, "_blank", "noopener");
+  const openWhatsapp = (msg: string) => {
+    const url = buildWaUrl(msg);
+    const win = window.open(url, "_blank", "noopener");
     window.setTimeout(() => {
       if (!win || win.closed || typeof win.closed === "undefined") {
         setShowWaFallback(true);
       }
     }, 800);
+  };
+
+  const handleWhatsappClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    openWhatsapp(mensagem);
   };
 
   const copiarMensagem = async () => {
@@ -63,6 +69,8 @@ function BioPage() {
       // ignora
     }
   };
+
+
 
 
   return (
