@@ -20,9 +20,32 @@ export const Route = createFileRoute("/")({
 
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
+  const [showWaFallback, setShowWaFallback] = useState(false);
+  const mensagem = "Olá! Quero um orçamento de persianas";
+  const telefone = "553235210281";
   const whatsappUrl =
-    "https://api.whatsapp.com/send?phone=553235210281&text=" +
-    encodeURIComponent("Olá! Quero um orçamento de persianas");
+    "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
+  const whatsappWebUrl =
+    "https://web.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
+
+  const handleWhatsappClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const win = window.open(whatsappUrl, "_blank", "noopener");
+    window.setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        setShowWaFallback(true);
+      }
+    }, 800);
+  };
+
+  const copiarMensagem = async () => {
+    try {
+      await navigator.clipboard.writeText(mensagem);
+    } catch {
+      // ignora
+    }
+  };
+
 
   return (
     <>
@@ -163,7 +186,16 @@ function BioPage() {
           border:none; font-size:1.4rem; cursor:pointer;
           display:flex; align-items:center; justify-content:center;
         }
+        .wa-panel .wa-text{ font-size:.9rem; color:var(--muted); margin:0 0 12px; text-align:center; }
+        .wa-panel .wa-message{
+          background: oklch(96% 0.01 60); border:1px solid oklch(90% 0.018 55);
+          border-radius:10px; padding:12px; font-size:.9rem; color:var(--ink);
+          margin-bottom:14px; text-align:center;
+        }
+        .wa-panel .wa-actions{ display:flex; flex-direction:column; gap:10px; }
+        .wa-panel .link-btn{ min-height:52px; }
         @keyframes fadein{ from{ opacity:0; } to{ opacity:1; } }
+
       `}</style>
 
       <div className="bio-root">
@@ -180,7 +212,9 @@ function BioPage() {
               className="link-btn primary"
               target="_blank"
               rel="noopener"
+              onClick={handleWhatsappClick}
             >
+
               <svg className="icon" viewBox="0 0 24 24" fill="white">
                 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
               </svg>
@@ -267,33 +301,50 @@ function BioPage() {
                 src={blackoutCoresAsset.url}
                 alt="Amostras de tecido Blackout Texturizado"
               />
-              <div className="colors-grid">
-                <div className="color-chip">
-                  <div className="swatch branco" />
-                  <span className="color-name">Branco</span>
-                </div>
-                <div className="color-chip">
-                  <div className="swatch light-green" />
-                  <span className="color-name">Light Green</span>
-                </div>
-                <div className="color-chip">
-                  <div className="swatch bege" />
-                  <span className="color-name">Bege</span>
-                </div>
-                <div className="color-chip">
-                  <div className="swatch marron" />
-                  <span className="color-name">Marron</span>
-                </div>
-                <div className="color-chip">
-                  <div className="swatch cinza" />
-                  <span className="color-name">Cinza</span>
-                </div>
+            </div>
+          </div>
+        )}
+
+        {showWaFallback && (
+          <div
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="WhatsApp bloqueado"
+            onClick={() => setShowWaFallback(false)}
+          >
+            <div className="cores-panel wa-panel" onClick={(e) => e.stopPropagation()}>
+              <div className="colors-title">WhatsApp bloqueado?</div>
+              <p className="wa-text">
+                Se o WhatsApp não abriu, use o WhatsApp Web ou copie a mensagem abaixo.
+              </p>
+              <div className="wa-message">"{mensagem}"</div>
+              <div className="wa-actions">
+                <a
+                  className="link-btn primary"
+                  href={whatsappWebUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="label">Abrir WhatsApp Web</span>
+                </a>
+                <button type="button" className="link-btn" onClick={copiarMensagem}>
+                  <span className="label">Copiar mensagem</span>
+                </button>
+                <button
+                  type="button"
+                  className="link-btn"
+                  onClick={() => setShowWaFallback(false)}
+                >
+                  <span className="label">Fechar</span>
+                </button>
               </div>
             </div>
           </div>
         )}
 
       </div>
+
     </>
   );
 }
