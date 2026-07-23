@@ -214,6 +214,58 @@ function BioPage() {
         .wa-panel .link-btn{ min-height:52px; }
         @keyframes fadein{ from{ opacity:0; } to{ opacity:1; } }
 
+        .trust-bar{
+          margin-top:14px; display:flex; flex-wrap:wrap; gap:8px 10px; justify-content:center;
+          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .17s forwards;
+        }
+        .trust-chip{
+          display:inline-flex; align-items:center; gap:6px;
+          font-size:.75rem; font-weight:600; color:var(--muted);
+          background:var(--surface); border:1px solid oklch(90% 0.018 55);
+          padding:6px 10px; border-radius:999px;
+          box-shadow: 0 1px 2px oklch(20% 0 0 / 0.04);
+        }
+        .trust-chip .dot{ width:6px; height:6px; border-radius:50%; background: var(--whatsapp); }
+        .trust-chip.rating{ color: var(--brand-dark); }
+
+        .quick-row{
+          display:flex; gap:10px; width:100%; margin-top:4px;
+          opacity:0; animation: rise .55s cubic-bezier(0.22,1,0.36,1) .23s forwards;
+        }
+        .quick-btn{
+          flex:1; min-height:52px; padding:8px 10px;
+          border-radius:12px; border:1px solid oklch(90% 0.018 55);
+          background:var(--surface); color:var(--ink);
+          font-family:inherit; font-size:.78rem; font-weight:600; line-height:1.2;
+          cursor:pointer; text-align:center;
+          box-shadow: 0 4px 12px oklch(20% 0 0 / 0.05);
+          transition: transform .2s ease, border-color .2s ease;
+        }
+        .quick-btn:hover{ border-color: var(--brand); transform: translateY(-1px); }
+        .quick-btn:active{ transform: scale(0.97); }
+
+        .link-btn.primary{ position:relative; }
+        .link-btn.primary::after{
+          content:""; position:absolute; inset:0; border-radius:var(--radius);
+          box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0.55);
+          animation: wa-pulse 2.2s ease-out 1.2s 3;
+          pointer-events:none;
+        }
+        @keyframes wa-pulse{
+          0%{ box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0.55); }
+          70%{ box-shadow: 0 0 0 14px oklch(60% 0.15 150 / 0); }
+          100%{ box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0); }
+        }
+        @media (prefers-reduced-motion: reduce){
+          .link-btn.primary::after{ animation:none; }
+        }
+
+        @media (max-width: 360px){
+          .bio-main h1{ font-size:1.25rem; }
+          .links{ margin-top:26px; }
+        }
+
+
       `}</style>
 
       <div className="bio-root">
