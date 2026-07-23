@@ -186,7 +186,16 @@ function BioPage() {
           border:none; font-size:1.4rem; cursor:pointer;
           display:flex; align-items:center; justify-content:center;
         }
+        .wa-panel .wa-text{ font-size:.9rem; color:var(--muted); margin:0 0 12px; text-align:center; }
+        .wa-panel .wa-message{
+          background: oklch(96% 0.01 60); border:1px solid oklch(90% 0.018 55);
+          border-radius:10px; padding:12px; font-size:.9rem; color:var(--ink);
+          margin-bottom:14px; text-align:center;
+        }
+        .wa-panel .wa-actions{ display:flex; flex-direction:column; gap:10px; }
+        .wa-panel .link-btn{ min-height:52px; }
         @keyframes fadein{ from{ opacity:0; } to{ opacity:1; } }
+
       `}</style>
 
       <div className="bio-root">
