@@ -1,18 +1,47 @@
-## Plano
+## Melhorias sugeridas para a página bio
 
-1. **Corrigir o WhatsApp bloqueado**
-   - Trocar o botão com `window.open()` por um link `<a>` direto para o WhatsApp.
-   - Usar `https://api.whatsapp.com/send?phone=553235210281&text=...`, que costuma funcionar melhor em previews/iframes e já abre com a mensagem pronta.
-   - Remover `noreferrer` do link do WhatsApp, mantendo abertura em nova aba.
+Foco: aumentar confiança, conversão pelo WhatsApp e polimento visual — sem quebrar o layout atual estilo "linktree".
 
-2. **Melhorar a página sem mudar a estrutura principal**
-   - Deixar os botões mais profissionais e legíveis no mobile.
-   - Melhorar o modal do “Blackout Texturizado” para valorizar a imagem das cores, com imagem maior e amostras organizadas.
-   - Corrigir pequenos textos/acentos, se necessário, mantendo o estilo da página atual.
+### 1. Conversão e contato
+- **CTA de ligação direta** ao lado do WhatsApp (`tel:3235210281`) — útil para clientes que preferem falar.
+- **Horário de atendimento** logo abaixo do nome ("Seg–Sáb · 8h às 18h") para reduzir dúvida antes de clicar.
+- **Cidade/região atendida** ("Atendemos Juiz de Fora e região") — reforça relevância local e SEO.
+- **Mensagens rápidas do WhatsApp**: em vez de uma única mensagem, oferecer 2–3 intenções ("Orçamento", "Dúvida sobre cores", "Agendar visita técnica") que preenchem o texto certo.
 
-3. **Revisar links visíveis**
-   - O link “Ver catálogo completo” ainda aponta para `https://SEUSITE.com`; substituir por um link real se você me passar, ou deixar como está se ainda não tiver catálogo.
+### 2. Provas sociais
+- **Bloco de avaliações**: nota + nº de clientes ("★ 4,9 · +500 instalações") acima dos botões.
+- **Selo de garantia/tempo de mercado** ("+10 anos no mercado", "Garantia de instalação").
+- **Link para avaliações do Google** como um dos botões.
 
-4. **Validar no preview**
-   - Conferir se o botão do WhatsApp aparece como link real e abre a URL correta com a mensagem preenchida.
-   - Conferir se o modal do Blackout Texturizado continua abrindo corretamente.
+### 3. Catálogo e produtos
+- Substituir o link placeholder `https://SEUSITE.com` por:
+  - um catálogo real (PDF hospedado como asset), **ou**
+  - uma grade curta de modelos (Rolô, Romana, Double Vision, Blackout) — cada card abrindo um modal parecido com o de cores.
+- No modal do **Blackout Texturizado**: adicionar nome de cada cor sob a imagem e um CTA "Quero esta cor" que já pré-preenche a mensagem do WhatsApp com a cor escolhida.
+
+### 4. Visual e UX
+- **Favicon e og:image** próprios (hoje faltam) para aparecer bonito quando compartilhado.
+- **Modo escuro automático** via `prefers-color-scheme` — a paleta atual em oklch facilita.
+- **Micro-interação** no botão do WhatsApp: leve pulso na primeira visita para chamar atenção.
+- **Reduzir peso do gradiente** de fundo em telas grandes; hoje ele ocupa muito no desktop.
+- **Espaçamento**: aumentar respiro entre o avatar e o primeiro botão em mobile pequeno (< 360px).
+
+### 5. Acessibilidade e SEO
+- Adicionar `aria-label` descritivo em cada botão (o texto visual já ajuda, mas o WhatsApp e Instagram merecem rótulo explícito).
+- Título da página mais específico: "Ágil Persianas · Persianas sob medida em [cidade]".
+- Meta description mencionando cidade e serviços.
+- JSON-LD `LocalBusiness` com telefone, endereço e horário — melhora aparição no Google.
+
+### 6. Conteúdo institucional (opcional)
+- Botão "Trabalhos recentes" abrindo uma galeria simples (modal com 4–8 fotos de instalações).
+- Link para redes adicionais se existirem (Facebook, TikTok).
+
+---
+
+### Como quer seguir?
+Posso implementar tudo, ou priorizar em ondas:
+- **Onda 1 (rápida, alto impacto)**: ligação direta, horário, cidade, avaliações estáticas, favicon/og:image, JSON-LD, mensagens rápidas do WhatsApp.
+- **Onda 2**: galeria de trabalhos, catálogo real, modal de modelos.
+- **Onda 3**: modo escuro, micro-interações, refino visual.
+
+Me diga qual onda (ou itens específicos) você quer que eu implemente e, se tiver, envie: cidade atendida, horário, telefone alternativo, link do Google Meu Negócio e fotos de trabalhos.
