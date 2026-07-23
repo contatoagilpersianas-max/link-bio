@@ -20,9 +20,32 @@ export const Route = createFileRoute("/")({
 
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
+  const [showWaFallback, setShowWaFallback] = useState(false);
+  const mensagem = "Olá! Quero um orçamento de persianas";
+  const telefone = "553235210281";
   const whatsappUrl =
-    "https://api.whatsapp.com/send?phone=553235210281&text=" +
-    encodeURIComponent("Olá! Quero um orçamento de persianas");
+    "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
+  const whatsappWebUrl =
+    "https://web.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(mensagem);
+
+  const handleWhatsappClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    const win = window.open(whatsappUrl, "_blank", "noopener");
+    window.setTimeout(() => {
+      if (!win || win.closed || typeof win.closed === "undefined") {
+        setShowWaFallback(true);
+      }
+    }, 800);
+  };
+
+  const copiarMensagem = async () => {
+    try {
+      await navigator.clipboard.writeText(mensagem);
+    } catch {
+      // ignora
+    }
+  };
+
 
   return (
     <>
