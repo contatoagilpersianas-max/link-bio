@@ -284,16 +284,22 @@ function BioPage() {
           <h1>Ágil Persianas</h1>
           <p className="tagline">Persianas sob medida · Instalação profissional</p>
 
+          <div className="trust-bar" aria-label="Informações rápidas">
+            <span className="trust-chip rating" aria-label="Avaliação 4.9 de 5">★ 4,9 · +500 clientes</span>
+            <span className="trust-chip"><span className="dot" />Seg–Sáb · 8h às 18h</span>
+            <span className="trust-chip">Juiz de Fora e região</span>
+          </div>
+
           <div className="links">
             <a
               href={whatsappUrl}
               className="link-btn primary"
               target="_blank"
               rel="noopener"
+              aria-label="Abrir WhatsApp e pedir orçamento"
               onClick={handleWhatsappClick}
             >
-
-              <svg className="icon" viewBox="0 0 24 24" fill="white">
+              <svg className="icon" viewBox="0 0 24 24" fill="white" aria-hidden="true">
                 <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
               </svg>
               <span className="label">
@@ -302,14 +308,41 @@ function BioPage() {
               </span>
             </a>
 
-            <a className="link-btn brand" href="https://SEUSITE.com" target="_blank" rel="noopener">
-              <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="white" strokeWidth={2}>
-                <rect x="3" y="4" width="18" height="16" rx="2" />
-                <path d="M3 9h18M8 4v5" />
+            <div className="quick-row" role="group" aria-label="Mensagens rápidas pelo WhatsApp">
+              <button
+                type="button"
+                className="quick-btn"
+                onClick={() => openWhatsapp("Olá! Gostaria de um orçamento de persianas.")}
+              >
+                Pedir orçamento
+              </button>
+              <button
+                type="button"
+                className="quick-btn"
+                onClick={() => openWhatsapp("Olá! Tenho dúvidas sobre cores e modelos de persianas.")}
+              >
+                Dúvidas sobre cores
+              </button>
+              <button
+                type="button"
+                className="quick-btn"
+                onClick={() => openWhatsapp("Olá! Quero agendar uma visita técnica para medir.")}
+              >
+                Agendar visita
+              </button>
+            </div>
+
+            <a
+              className="link-btn"
+              href="tel:+553235210281"
+              aria-label="Ligar para Ágil Persianas: 32 3521-0281"
+            >
+              <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-dark)" strokeWidth={2} aria-hidden="true">
+                <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6A19.79 19.79 0 0 1 2.12 4.18 2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.37 1.9.72 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.35 1.85.59 2.81.72A2 2 0 0 1 22 16.92z" />
               </svg>
               <span className="label">
-                Ver catálogo completo
-                <span className="sub">Todas as linhas e modelos</span>
+                Ligar agora
+                <span className="sub">(32) 3521-0281</span>
               </span>
             </a>
 
@@ -317,8 +350,9 @@ function BioPage() {
               type="button"
               className="link-btn"
               onClick={() => setShowCores(true)}
+              aria-label="Ver cores do Blackout Texturizado"
             >
-              <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-dark)" strokeWidth={2}>
+              <svg className="icon" viewBox="0 0 24 24" fill="none" stroke="var(--brand-dark)" strokeWidth={2} aria-hidden="true">
                 <path d="M4 4h16v16H4z" />
                 <path d="M4 10h16M10 4v16" />
               </svg>
@@ -327,6 +361,7 @@ function BioPage() {
                 <span className="sub">Ver cores disponíveis</span>
               </span>
             </button>
+
 
             <a
               className="link-btn"
