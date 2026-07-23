@@ -296,7 +296,46 @@ function BioPage() {
           </div>
         )}
 
+        {showWaFallback && (
+          <div
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="WhatsApp bloqueado"
+            onClick={() => setShowWaFallback(false)}
+          >
+            <div className="cores-panel wa-panel" onClick={(e) => e.stopPropagation()}>
+              <div className="colors-title">WhatsApp bloqueado?</div>
+              <p className="wa-text">
+                Se o WhatsApp não abriu, use o WhatsApp Web ou copie a mensagem abaixo.
+              </p>
+              <div className="wa-message">"{mensagem}"</div>
+              <div className="wa-actions">
+                <a
+                  className="link-btn primary"
+                  href={whatsappWebUrl}
+                  target="_blank"
+                  rel="noopener"
+                >
+                  <span className="label">Abrir WhatsApp Web</span>
+                </a>
+                <button type="button" className="link-btn" onClick={copiarMensagem}>
+                  <span className="label">Copiar mensagem</span>
+                </button>
+                <button
+                  type="button"
+                  className="link-btn"
+                  onClick={() => setShowWaFallback(false)}
+                >
+                  <span className="label">Fechar</span>
+                </button>
+              </div>
+            </div>
+          </div>
+        )}
+
       </div>
+
     </>
   );
 }
