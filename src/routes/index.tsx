@@ -7,16 +7,34 @@ import blackoutCoresAsset from "@/assets/blackout-cores2.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ágil Persianas" },
-      { name: "description", content: "Orçamento de persianas pelo WhatsApp, catálogo e cores do Blackout Texturizado." },
-      { property: "og:title", content: "Ágil Persianas" },
-      { property: "og:description", content: "Orçamento de persianas pelo WhatsApp, catálogo e cores do Blackout Texturizado." },
+      { title: "Ágil Persianas · Persianas sob medida em Juiz de Fora" },
+      { name: "description", content: "Persianas sob medida com instalação profissional em Juiz de Fora e região. Orçamento rápido pelo WhatsApp e catálogo de cores do Blackout Texturizado." },
+      { property: "og:title", content: "Ágil Persianas · Persianas sob medida" },
+      { property: "og:description", content: "Persianas sob medida com instalação profissional em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
       { property: "og:type", content: "website" },
+      { property: "og:url", content: "https://agilpersianas-bio.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
+    ],
+    links: [{ rel: "canonical", href: "https://agilpersianas-bio.lovable.app/" }],
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify({
+          "@context": "https://schema.org",
+          "@type": "LocalBusiness",
+          name: "Ágil Persianas",
+          description: "Persianas sob medida com instalação profissional.",
+          telephone: "+55 32 3521-0281",
+          areaServed: "Juiz de Fora e região",
+          url: "https://agilpersianas-bio.lovable.app/",
+          openingHours: "Mo-Sa 08:00-18:00",
+        }),
+      },
     ],
   }),
   component: BioPage,
 });
+
 
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
