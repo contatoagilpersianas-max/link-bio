@@ -39,6 +39,7 @@ export const Route = createFileRoute("/")({
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
   const [showWaFallback, setShowWaFallback] = useState(false);
+  const [showLisoCores, setShowLisoCores] = useState(false);
   const mensagem = "Olá! Quero um orçamento de persianas";
   const telefone = "553235210281";
   const buildWaUrl = (msg: string) =>
@@ -273,6 +274,62 @@ function BioPage() {
           .links{ margin-top:26px; }
         }
 
+        .catalog-section{
+          width:100%; margin-top:36px;
+          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .52s forwards;
+        }
+        .catalog-title{
+          font-size:.85rem; font-weight:700; color:var(--muted);
+          text-transform:uppercase; letter-spacing:.04em; margin-bottom:14px; text-align:left;
+        }
+        .product-card{
+          background:var(--surface); border-radius:var(--radius);
+          border:1px solid oklch(90% 0.018 55);
+          box-shadow: 0 8px 24px oklch(20% 0 0 / 0.07), 0 1px 2px oklch(20% 0 0 / 0.04);
+          overflow:hidden;
+        }
+        .product-img-wrap{
+          position:relative; width:100%; aspect-ratio:4/3; overflow:hidden; cursor:zoom-in;
+          background: oklch(96% 0.008 55);
+        }
+        .product-img-wrap img{
+          width:100%; height:100%; object-fit:cover;
+          transition: transform .35s cubic-bezier(0.22,1,0.36,1);
+        }
+        .product-img-wrap:hover img{ transform: scale(1.04); }
+        .product-colors-badge{
+          position:absolute; bottom:10px; right:10px;
+          background: oklch(100% 0 0 / 0.9); border-radius:999px;
+          padding:5px 10px; font-size:.72rem; font-weight:700; color:var(--ink);
+          box-shadow: 0 2px 8px oklch(0% 0 0 / 0.12);
+          cursor:pointer; border:none; font-family:inherit;
+          transition: background .2s ease;
+        }
+        .product-colors-badge:hover{ background: oklch(100% 0 0); }
+        .product-body{ padding:16px 18px; }
+        .product-name{ font-size:1rem; font-weight:700; margin:0 0 4px; }
+        .product-desc{ font-size:.82rem; color:var(--muted); margin:0 0 14px; line-height:1.45; }
+        .product-swatches{ display:flex; gap:7px; margin-bottom:16px; flex-wrap:wrap; }
+        .mini-swatch{
+          width:26px; height:26px; border-radius:6px;
+          box-shadow: 0 1px 3px oklch(0% 0 0 / 0.15), inset 0 0 0 1px oklch(0% 0 0 / 0.08);
+          position:relative;
+        }
+        .mini-swatch[title]{ cursor:default; }
+        .swatch-branco{ background:#F1EFEA; }
+        .swatch-bege{ background:#D4C9B5; }
+        .swatch-marron{ background:#9C8B76; }
+        .swatch-preto{ background:#1C1C1C; }
+        .product-cta{
+          display:flex; align-items:center; gap:10px; width:100%; min-height:52px; padding:12px 16px;
+          border-radius:10px; border:none; font-family:inherit; font-size:.9rem; font-weight:700;
+          background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
+          color:white; cursor:pointer; text-decoration:none; justify-content:center;
+          box-shadow: 0 6px 18px oklch(60% 0.15 150 / 0.32);
+          transition: transform .2s ease, box-shadow .2s ease;
+        }
+        .product-cta:hover{ transform:translateY(-1px); box-shadow: 0 8px 22px oklch(60% 0.15 150 / 0.42); }
+        .product-cta:active{ transform:scale(0.98); }
 
       `}</style>
 
@@ -382,6 +439,50 @@ function BioPage() {
           </div>
 
 
+          <section className="catalog-section" aria-label="Nossos produtos">
+            <div className="catalog-title">Nossos produtos</div>
+
+            <div className="product-card">
+              <div className="product-img-wrap" onClick={() => setShowLisoCores(true)}>
+                <img
+                  src="/blackout-liso-produto.png"
+                  alt="Cortina Rolô Blackout Tecido Liso"
+                  loading="lazy"
+                />
+                <button
+                  type="button"
+                  className="product-colors-badge"
+                  onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }}
+                  aria-label="Ver cores disponíveis"
+                >
+                  Ver cores ›
+                </button>
+              </div>
+              <div className="product-body">
+                <p className="product-name">Cortina Rolô Blackout · Tecido Liso</p>
+                <p className="product-desc">Bloqueia 100% da luz · Sob medida · Instalação inclusa</p>
+                <div className="product-swatches" aria-label="Cores disponíveis">
+                  <span className="mini-swatch swatch-branco" title="Branco" />
+                  <span className="mini-swatch swatch-bege" title="Bege" />
+                  <span className="mini-swatch swatch-marron" title="Marron" />
+                  <span className="mini-swatch swatch-preto" title="Preto" />
+                </div>
+                <a
+                  className="product-cta"
+                  href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Tecido Liso. Podem me passar um orçamento?")}
+                  target="_blank"
+                  rel="noopener"
+                  aria-label="Pedir orçamento da Cortina Rolô Blackout Tecido Liso pelo WhatsApp"
+                >
+                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
+                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
+                  </svg>
+                  Pedir orçamento
+                </a>
+              </div>
+            </div>
+          </section>
+
           <footer className="bio-footer">Ágil Persianas</footer>
         </main>
 
@@ -413,6 +514,33 @@ function BioPage() {
                 className="cores-image"
                 src={blackoutCoresAsset.url}
                 alt="Amostras de tecido Blackout Texturizado"
+              />
+            </div>
+          </div>
+        )}
+
+        {showLisoCores && (
+          <div
+            className="lightbox"
+            role="dialog"
+            aria-modal="true"
+            aria-label="Cores do Blackout Tecido Liso"
+            onClick={() => setShowLisoCores(false)}
+          >
+            <button
+              type="button"
+              className="lightbox-close"
+              aria-label="Fechar"
+              onClick={(e) => { e.stopPropagation(); setShowLisoCores(false); }}
+            >
+              ×
+            </button>
+            <div className="cores-panel" onClick={(e) => e.stopPropagation()}>
+              <div className="colors-title">Cores · Blackout Tecido Liso</div>
+              <img
+                className="cores-image"
+                src="/blackout-liso-cores.png"
+                alt="Amostras de tecido Blackout Liso: Branco, Bege, Marron, Preto"
               />
             </div>
           </div>
