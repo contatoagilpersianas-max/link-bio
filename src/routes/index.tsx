@@ -40,6 +40,7 @@ function BioPage() {
   const [showCores, setShowCores] = useState(false);
   const [showWaFallback, setShowWaFallback] = useState(false);
   const [showLisoCores, setShowLisoCores] = useState(false);
+  const [lisoImg, setLisoImg] = useState<'branco' | 'bege'>('branco');
   const mensagem = "Olá! Quero um orçamento de persianas";
   const telefone = "553235210281";
   const buildWaUrl = (msg: string) =>
@@ -289,14 +290,25 @@ function BioPage() {
           overflow:hidden;
         }
         .product-img-wrap{
-          position:relative; width:100%; aspect-ratio:4/3; overflow:hidden; cursor:zoom-in;
-          background: oklch(96% 0.008 55);
+          position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; cursor:zoom-in;
+          background: oklch(14% 0 0);
         }
         .product-img-wrap img{
-          width:100%; height:100%; object-fit:cover;
+          width:100%; height:100%; object-fit:contain;
           transition: transform .35s cubic-bezier(0.22,1,0.36,1);
         }
-        .product-img-wrap:hover img{ transform: scale(1.04); }
+        .product-img-wrap:hover img{ transform: scale(1.02); }
+        .img-color-tabs{
+          position:absolute; top:10px; left:10px; display:flex; gap:6px;
+        }
+        .img-tab{
+          padding:4px 10px; border-radius:999px; font-size:.72rem; font-weight:700;
+          border:none; cursor:pointer; font-family:inherit;
+          background: oklch(100% 0 0 / 0.18); color:white;
+          backdrop-filter: blur(4px);
+          transition: background .2s ease;
+        }
+        .img-tab.active{ background: oklch(100% 0 0 / 0.9); color:var(--ink); }
         .product-colors-badge{
           position:absolute; bottom:10px; right:10px;
           background: oklch(100% 0 0 / 0.9); border-radius:999px;
@@ -344,7 +356,6 @@ function BioPage() {
           <div className="trust-bar" aria-label="Informações rápidas">
             <span className="trust-chip rating" aria-label="Avaliação 4.9 de 5">★ 4,9 · +500 clientes</span>
             <span className="trust-chip"><span className="dot" />Seg–Sáb · 8h às 18h</span>
-            <span className="trust-chip">Juiz de Fora e região</span>
           </div>
 
           <div className="links">
@@ -445,15 +456,27 @@ function BioPage() {
             <div className="product-card">
               <div className="product-img-wrap" onClick={() => setShowLisoCores(true)}>
                 <img
-                  src="/blackout-liso-produto.png"
-                  alt="Cortina Rolô Blackout Tecido Liso"
+                  src={lisoImg === 'branco' ? '/blackout-liso-produto.png' : '/blackout-liso-bege.png'}
+                  alt={`Cortina Rolô Blackout Tecido Liso ${lisoImg === 'branco' ? 'Branco' : 'Bege'}`}
                   loading="lazy"
                 />
+                <div className="img-color-tabs" onClick={(e) => e.stopPropagation()}>
+                  <button
+                    type="button"
+                    className={`img-tab${lisoImg === 'branco' ? ' active' : ''}`}
+                    onClick={() => setLisoImg('branco')}
+                  >Branco</button>
+                  <button
+                    type="button"
+                    className={`img-tab${lisoImg === 'bege' ? ' active' : ''}`}
+                    onClick={() => setLisoImg('bege')}
+                  >Bege</button>
+                </div>
                 <button
                   type="button"
                   className="product-colors-badge"
                   onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }}
-                  aria-label="Ver cores disponíveis"
+                  aria-label="Ver todas as cores disponíveis"
                 >
                   Ver cores ›
                 </button>
