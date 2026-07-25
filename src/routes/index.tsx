@@ -567,7 +567,7 @@ function BioPage() {
           {/* Trust */}
           <div className="trust-bar" aria-label="Informações rápidas">
             <span className="trust-chip rating" aria-label="Avaliação 4.9">★ 4,9 · +500 clientes</span>
-            <span className="trust-chip"><span className="dot" />Seg–Sáb · 8h às 18h</span>
+            <span className="trust-chip"><span className="dot" />Aberto 24h</span>
           </div>
 
           {/* Actions */}
