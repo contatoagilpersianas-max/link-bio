@@ -616,7 +616,7 @@ function BioPage() {
                     <span className="sw" style={{ background: "#9C8B76" }} title="Marron" />
                     <span className="sw" style={{ background: "#1C1C1C" }} title="Preto" />
                   </div>
-                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Tecido Liso. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                  <a className="product-cta" href={buildWaUrl("Olá! Vi a Cortina Rolô Blackout Tecido Liso no catálogo de vocês e quero um orçamento sob medida. Podem me ajudar?")} target="_blank" rel="noopener">
                     {WA_ICON} Pedir orçamento
                   </a>
                 </div>
@@ -635,7 +635,7 @@ function BioPage() {
                   <div className="product-swatches" aria-label="Cores disponíveis">
                     <span className="sw" style={{ background: "#DBD3C4" }} title="Bege" />
                   </div>
-                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Romana Blackout Texturizado Bege. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                  <a className="product-cta" href={buildWaUrl("Olá! Vi a Cortina Romana Blackout Texturizado no catálogo de vocês e quero um orçamento sob medida. Podem me ajudar?")} target="_blank" rel="noopener">
                     {WA_ICON} Pedir orçamento
                   </a>
                 </div>
@@ -655,7 +655,7 @@ function BioPage() {
                     <span className="sw" style={{ background: "#D4C9B5" }} title="Bege" />
                     <span className="sw" style={{ background: "#A6AEC0" }} title="Cinza" />
                   </div>
-                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Double Vision Semi Blackout. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                  <a className="product-cta" href={buildWaUrl("Olá! Vi a Cortina Double Vision Semi Blackout no catálogo de vocês e quero um orçamento sob medida. Podem me ajudar?")} target="_blank" rel="noopener">
                     {WA_ICON} Pedir orçamento
                   </a>
                 </div>
@@ -682,7 +682,7 @@ function BioPage() {
                     <span className="sw" style={{ background: "#C8C2AF" }} title="Marron" />
                     <span className="sw" style={{ background: "#A6AEC0" }} title="Cinza" />
                   </div>
-                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Texturizado. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                  <a className="product-cta" href={buildWaUrl("Olá! Vi a Cortina Rolô Blackout Texturizado no catálogo de vocês e quero um orçamento sob medida. Podem me ajudar?")} target="_blank" rel="noopener">
                     {WA_ICON} Pedir orçamento
                   </a>
                 </div>
