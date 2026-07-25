@@ -1,5 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { useState } from "react";
+import { useState, useRef } from "react";
 import avatarAsset from "@/assets/avatar.png.asset.json";
 import blackoutCoresAsset from "@/assets/blackout-cores2.png.asset.json";
 
@@ -36,13 +36,50 @@ export const Route = createFileRoute("/")({
 });
 
 
+function ProductCarousel({ images, alt, style, imgStyle, badge }: {
+  images: string[];
+  alt: string;
+  style?: React.CSSProperties;
+  imgStyle?: React.CSSProperties;
+  badge?: React.ReactNode;
+}) {
+  const [idx, setIdx] = useState(0);
+  const touchX = useRef(0);
+
+  const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
+  const next = () => setIdx(i => (i + 1) % images.length);
+
+  return (
+    <div
+      className="product-img-wrap"
+      style={style}
+      onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
+      onTouchEnd={(e) => {
+        const diff = touchX.current - e.changedTouches[0].clientX;
+        if (Math.abs(diff) > 40) diff > 0 ? next() : prev();
+      }}
+    >
+      <img src={images[idx]} alt={alt} loading="lazy" style={imgStyle} />
+      {images.length > 1 && (
+        <>
+          <button className="carousel-btn carousel-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Foto anterior">‹</button>
+          <button className="carousel-btn carousel-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Próxima foto">›</button>
+          <div className="carousel-dots">
+            {images.map((_, i) => (
+              <button key={i} className={`carousel-dot${i === idx ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setIdx(i); }} aria-label={`Foto ${i + 1}`} />
+            ))}
+          </div>
+        </>
+      )}
+      {badge}
+    </div>
+  );
+}
+
 function BioPage() {
   const [showCores, setShowCores] = useState(false);
   const [showWaFallback, setShowWaFallback] = useState(false);
   const [showLisoCores, setShowLisoCores] = useState(false);
-  const [lisoImg, setLisoImg] = useState<'branco' | 'bege'>('branco');
-  const [romanaImg, setRomanaImg] = useState<1 | 2>(1);
-  const [doubleImg, setDoubleImg] = useState<1 | 2 | 3>(1);
   const mensagem = "Olá! Quero um orçamento de persianas";
   const telefone = "553235210281";
   const buildWaUrl = (msg: string) =>
@@ -300,17 +337,30 @@ function BioPage() {
           transition: transform .35s cubic-bezier(0.22,1,0.36,1);
         }
         .product-img-wrap:hover img{ transform: scale(1.02); }
-        .img-color-tabs{
-          position:absolute; top:10px; left:10px; display:flex; gap:6px;
+        .carousel-btn{
+          position:absolute; top:50%; transform:translateY(-50%);
+          width:36px; height:36px; border-radius:50%;
+          background: oklch(100% 0 0 / 0.82); color:var(--ink);
+          border:none; font-size:1.4rem; line-height:1; cursor:pointer;
+          display:flex; align-items:center; justify-content:center;
+          box-shadow: 0 2px 8px oklch(0% 0 0 / 0.18);
+          transition: background .15s ease, transform .15s ease;
+          z-index:2;
         }
-        .img-tab{
-          padding:4px 10px; border-radius:999px; font-size:.72rem; font-weight:700;
-          border:none; cursor:pointer; font-family:inherit;
-          background: oklch(100% 0 0 / 0.18); color:white;
-          backdrop-filter: blur(4px);
-          transition: background .2s ease;
+        .carousel-btn:hover{ background: oklch(100% 0 0); }
+        .carousel-btn:active{ transform:translateY(-50%) scale(0.93); }
+        .carousel-prev{ left:10px; }
+        .carousel-next{ right:10px; }
+        .carousel-dots{
+          position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
+          display:flex; gap:6px; z-index:2;
         }
-        .img-tab.active{ background: oklch(100% 0 0 / 0.9); color:var(--ink); }
+        .carousel-dot{
+          width:7px; height:7px; border-radius:50%; border:none; cursor:pointer; padding:0;
+          background: oklch(100% 0 0 / 0.45);
+          transition: background .2s ease, transform .2s ease;
+        }
+        .carousel-dot.active{ background: oklch(100% 0 0); transform:scale(1.3); }
         .product-colors-badge{
           position:absolute; bottom:10px; right:10px;
           background: oklch(100% 0 0 / 0.9); border-radius:999px;
@@ -410,33 +460,13 @@ function BioPage() {
 
             {/* Card 1 – Tecido Liso */}
             <div className="product-card">
-              <div className="product-img-wrap" onClick={() => setShowLisoCores(true)}>
-                <img
-                  src={lisoImg === 'branco' ? '/blackout-liso-produto.png' : '/blackout-liso-bege.png'}
-                  alt={`Cortina Rolô Blackout Tecido Liso ${lisoImg === 'branco' ? 'Branco' : 'Bege'}`}
-                  loading="lazy"
-                />
-                <div className="img-color-tabs" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    type="button"
-                    className={`img-tab${lisoImg === 'branco' ? ' active' : ''}`}
-                    onClick={() => setLisoImg('branco')}
-                  >Branco</button>
-                  <button
-                    type="button"
-                    className={`img-tab${lisoImg === 'bege' ? ' active' : ''}`}
-                    onClick={() => setLisoImg('bege')}
-                  >Bege</button>
-                </div>
-                <button
-                  type="button"
-                  className="product-colors-badge"
-                  onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }}
-                  aria-label="Ver todas as cores disponíveis"
-                >
-                  Ver cores ›
-                </button>
-              </div>
+              <ProductCarousel
+                images={['/blackout-liso-produto.png', '/blackout-liso-bege.png']}
+                alt="Cortina Rolô Blackout Tecido Liso"
+                badge={
+                  <button type="button" className="product-colors-badge" onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }} aria-label="Ver todas as cores disponíveis">Ver cores ›</button>
+                }
+              />
               <div className="product-body">
                 <p className="product-name">Cortina Rolô Blackout · Tecido Liso</p>
                 <p className="product-desc">Bloqueia 100% da luz · Sob medida</p>
@@ -463,25 +493,11 @@ function BioPage() {
 
             {/* Card 2 – Cortina Romana */}
             <div className="product-card" style={{marginTop: '16px'}}>
-              <div className="product-img-wrap" style={{aspectRatio:'3/4', background:'#1a1a1a'}}>
-                <img
-                  src={romanaImg === 1 ? '/romana-blackout-foto1.jpg' : '/romana-blackout-foto2.jpg'}
-                  alt="Cortina Romana Blackout Texturizado Bege"
-                  loading="lazy"
-                />
-                <div className="img-color-tabs" onClick={(e) => e.stopPropagation()}>
-                  <button
-                    type="button"
-                    className={`img-tab${romanaImg === 1 ? ' active' : ''}`}
-                    onClick={() => setRomanaImg(1)}
-                  >Foto 1</button>
-                  <button
-                    type="button"
-                    className={`img-tab${romanaImg === 2 ? ' active' : ''}`}
-                    onClick={() => setRomanaImg(2)}
-                  >Foto 2</button>
-                </div>
-              </div>
+              <ProductCarousel
+                images={['/romana-blackout-foto1.jpg', '/romana-blackout-foto2.jpg']}
+                alt="Cortina Romana Blackout Texturizado Bege"
+                style={{aspectRatio:'3/4', background:'#1a1a1a'}}
+              />
               <div className="product-body">
                 <p className="product-name">Cortina Romana Blackout · Texturizado</p>
                 <p className="product-desc">Bloqueia 100% da luz · Dobras estruturadas · Sob medida</p>
@@ -505,18 +521,11 @@ function BioPage() {
 
             {/* Card 3 – Double Vision */}
             <div className="product-card" style={{marginTop: '16px'}}>
-              <div className="product-img-wrap" style={{aspectRatio:'4/3', background:'#1a1a1a'}}>
-                <img
-                  src={doubleImg === 1 ? '/double-vision-foto1.jpg' : doubleImg === 2 ? '/double-vision-foto2.jpg' : '/double-vision-foto3.jpg'}
-                  alt="Cortina Double Vision Semi Blackout"
-                  loading="lazy"
-                />
-                <div className="img-color-tabs" onClick={(e) => e.stopPropagation()}>
-                  <button type="button" className={`img-tab${doubleImg === 1 ? ' active' : ''}`} onClick={() => setDoubleImg(1)}>Foto 1</button>
-                  <button type="button" className={`img-tab${doubleImg === 2 ? ' active' : ''}`} onClick={() => setDoubleImg(2)}>Foto 2</button>
-                  <button type="button" className={`img-tab${doubleImg === 3 ? ' active' : ''}`} onClick={() => setDoubleImg(3)}>Foto 3</button>
-                </div>
-              </div>
+              <ProductCarousel
+                images={['/double-vision-foto1.jpg', '/double-vision-foto2.jpg', '/double-vision-foto3.jpg']}
+                alt="Cortina Double Vision Semi Blackout"
+                style={{aspectRatio:'4/3', background:'#1a1a1a'}}
+              />
               <div className="product-body">
                 <p className="product-name">Cortina Double Vision · Semi Blackout</p>
                 <p className="product-desc">Controle de luz e privacidade · Faixas alternadas opacas e translúcidas · Sob medida</p>
@@ -542,22 +551,15 @@ function BioPage() {
 
             {/* Card 4 – Blackout Texturizado */}
             <div className="product-card" style={{marginTop: '16px'}}>
-              <div className="product-img-wrap" onClick={() => setShowCores(true)} style={{aspectRatio:'4/3', background:'#f5f3ef'}}>
-                <img
-                  src={blackoutCoresAsset.url}
-                  alt="Cores do Blackout Texturizado"
-                  loading="lazy"
-                  style={{objectFit:'cover'}}
-                />
-                <button
-                  type="button"
-                  className="product-colors-badge"
-                  onClick={(e) => { e.stopPropagation(); setShowCores(true); }}
-                  aria-label="Ver todas as cores disponíveis"
-                >
-                  Ver cores ›
-                </button>
-              </div>
+              <ProductCarousel
+                images={[blackoutCoresAsset.url]}
+                alt="Cores do Blackout Texturizado"
+                style={{aspectRatio:'4/3', background:'#f5f3ef', cursor:'zoom-in'}}
+                imgStyle={{objectFit:'cover'}}
+                badge={
+                  <button type="button" className="product-colors-badge" onClick={(e) => { e.stopPropagation(); setShowCores(true); }} aria-label="Ver todas as cores disponíveis">Ver cores ›</button>
+                }
+              />
               <div className="product-body">
                 <p className="product-name">Cortina Rolô Blackout · Texturizado</p>
                 <p className="product-desc">Bloqueia 100% da luz · Textura exclusiva · Sob medida</p>
