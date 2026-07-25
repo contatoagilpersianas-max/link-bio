@@ -627,7 +627,7 @@ function BioPage() {
                 <ProductCarousel
                   images={["/romana-blackout-foto1.jpg", "/romana-blackout-foto2.jpg"]}
                   alt="Cortina Romana Blackout Texturizado Bege"
-                  style={{ aspectRatio: "3/4", background: "oklch(9% 0.006 38)" }}
+                  style={{ aspectRatio: "3/4", background: "oklch(93% 0.008 55)" }}
                 />
                 <div className="product-body">
                   <p className="product-name">Cortina Romana Blackout · Texturizado</p>
