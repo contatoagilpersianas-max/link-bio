@@ -321,7 +321,7 @@ function BioPage() {
         .p-img-wrap {
           position: relative;
           width: 100%;
-          aspect-ratio: 4/3;
+          aspect-ratio: 3/4;
           overflow: hidden;
           background: oklch(93% 0.008 55);
         }
