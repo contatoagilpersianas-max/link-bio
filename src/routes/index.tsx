@@ -398,8 +398,19 @@ function BioPage() {
         .product-desc {
           font-size: 0.81rem;
           color: var(--ink-sub);
-          margin: 0 0 14px;
+          margin: 0 0 10px;
           line-height: 1.55;
+        }
+        .product-price {
+          font-size: 0.78rem;
+          font-weight: 600;
+          color: var(--ink-sub);
+          margin: 0 0 14px;
+        }
+        .product-price strong {
+          font-size: 1.05rem;
+          font-weight: 700;
+          color: var(--gold);
         }
         .product-swatches { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
         .sw {
@@ -610,6 +621,7 @@ function BioPage() {
                 <div className="product-body">
                   <p className="product-name">Cortina Rolô Blackout · Tecido Liso</p>
                   <p className="product-desc">Bloqueia 100% da luz · Sob medida</p>
+                  <p className="product-price">A partir de <strong>R$ 139</strong></p>
                   <div className="product-swatches" aria-label="Cores disponíveis">
                     <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
                     <span className="sw" style={{ background: "#D4C9B5" }} title="Bege" />
@@ -632,6 +644,7 @@ function BioPage() {
                 <div className="product-body">
                   <p className="product-name">Cortina Romana Blackout · Texturizado</p>
                   <p className="product-desc">Bloqueia 100% da luz · Dobras estruturadas · Sob medida</p>
+                  <p className="product-price">A partir de <strong>R$ 227</strong></p>
                   <div className="product-swatches" aria-label="Cores disponíveis">
                     <span className="sw" style={{ background: "#DBD3C4" }} title="Bege" />
                   </div>
@@ -650,6 +663,7 @@ function BioPage() {
                 <div className="product-body">
                   <p className="product-name">Cortina Double Vision · Semi Blackout</p>
                   <p className="product-desc">Controle de luz e privacidade · Faixas opacas e translúcidas · Sob medida</p>
+                  <p className="product-price">A partir de <strong>R$ 302</strong></p>
                   <div className="product-swatches" aria-label="Cores disponíveis">
                     <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
                     <span className="sw" style={{ background: "#D4C9B5" }} title="Bege" />
@@ -675,6 +689,7 @@ function BioPage() {
                 <div className="product-body">
                   <p className="product-name">Cortina Rolô Blackout · Texturizado</p>
                   <p className="product-desc">Bloqueia 100% da luz · Textura exclusiva · Sob medida</p>
+                  <p className="product-price">A partir de <strong>R$ 155</strong></p>
                   <div className="product-swatches" aria-label="Cores disponíveis">
                     <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
                     <span className="sw" style={{ background: "#DCE1D8" }} title="Verde Claro" />
