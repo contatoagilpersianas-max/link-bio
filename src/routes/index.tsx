@@ -3,19 +3,23 @@ import { useState, useRef } from "react";
 import avatarAsset from "@/assets/avatar.png.asset.json";
 import blackoutCoresAsset from "@/assets/blackout-cores2.png.asset.json";
 
-
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
       { title: "Ágil Persianas · Persianas sob medida em Juiz de Fora" },
-      { name: "description", content: "Persianas sob medida com instalação profissional em Juiz de Fora e região. Orçamento rápido pelo WhatsApp e catálogo de cores do Blackout Texturizado." },
+      { name: "description", content: "Persianas sob medida em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
       { property: "og:title", content: "Ágil Persianas · Persianas sob medida" },
-      { property: "og:description", content: "Persianas sob medida com instalação profissional em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
+      { property: "og:description", content: "Persianas sob medida em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://agilpersianas-bio.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
     ],
-    links: [{ rel: "canonical", href: "https://agilpersianas-bio.lovable.app/" }],
+    links: [
+      { rel: "canonical", href: "https://agilpersianas-bio.lovable.app/" },
+      { rel: "preconnect", href: "https://fonts.googleapis.com" },
+      { rel: "preconnect", href: "https://fonts.gstatic.com", crossOrigin: "anonymous" },
+      { rel: "stylesheet", href: "https://fonts.googleapis.com/css2?family=Barlow:wght@400;500;600;700&family=Barlow+Condensed:wght@600;700&display=swap" },
+    ],
     scripts: [
       {
         type: "application/ld+json",
@@ -23,7 +27,7 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Ágil Persianas",
-          description: "Persianas sob medida com instalação profissional.",
+          description: "Persianas sob medida.",
           telephone: "+55 32 3521-0281",
           areaServed: "Juiz de Fora e região",
           url: "https://agilpersianas-bio.lovable.app/",
@@ -35,6 +39,11 @@ export const Route = createFileRoute("/")({
   component: BioPage,
 });
 
+const WA_ICON = (
+  <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
+  </svg>
+);
 
 function ProductCarousel({ images, alt, style, imgStyle, badge }: {
   images: string[];
@@ -45,13 +54,12 @@ function ProductCarousel({ images, alt, style, imgStyle, badge }: {
 }) {
   const [idx, setIdx] = useState(0);
   const touchX = useRef(0);
-
   const prev = () => setIdx(i => (i - 1 + images.length) % images.length);
   const next = () => setIdx(i => (i + 1) % images.length);
 
   return (
     <div
-      className="product-img-wrap"
+      className="p-img-wrap"
       style={style}
       onTouchStart={(e) => { touchX.current = e.touches[0].clientX; }}
       onTouchEnd={(e) => {
@@ -62,11 +70,11 @@ function ProductCarousel({ images, alt, style, imgStyle, badge }: {
       <img src={images[idx]} alt={alt} loading="lazy" style={imgStyle} />
       {images.length > 1 && (
         <>
-          <button className="carousel-btn carousel-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Foto anterior">‹</button>
-          <button className="carousel-btn carousel-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Próxima foto">›</button>
-          <div className="carousel-dots">
+          <button className="c-btn c-prev" onClick={(e) => { e.stopPropagation(); prev(); }} aria-label="Foto anterior">‹</button>
+          <button className="c-btn c-next" onClick={(e) => { e.stopPropagation(); next(); }} aria-label="Próxima foto">›</button>
+          <div className="c-dots">
             {images.map((_, i) => (
-              <button key={i} className={`carousel-dot${i === idx ? ' active' : ''}`} onClick={(e) => { e.stopPropagation(); setIdx(i); }} aria-label={`Foto ${i + 1}`} />
+              <button key={i} className={`c-dot${i === idx ? " on" : ""}`} onClick={(e) => { e.stopPropagation(); setIdx(i); }} aria-label={`Foto ${i + 1}`} />
             ))}
           </div>
         </>
@@ -80,8 +88,9 @@ function BioPage() {
   const [showCores, setShowCores] = useState(false);
   const [showWaFallback, setShowWaFallback] = useState(false);
   const [showLisoCores, setShowLisoCores] = useState(false);
-  const mensagem = "Olá! Quero um orçamento de persianas";
+
   const telefone = "553235210281";
+  const mensagem = "Olá! Quero um orçamento de persianas";
   const buildWaUrl = (msg: string) =>
     "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(msg);
   const whatsappUrl = buildWaUrl(mensagem);
@@ -92,9 +101,7 @@ function BioPage() {
     const url = buildWaUrl(msg);
     const win = window.open(url, "_blank", "noopener");
     window.setTimeout(() => {
-      if (!win || win.closed || typeof win.closed === "undefined") {
-        setShowWaFallback(true);
-      }
+      if (!win || win.closed || typeof win.closed === "undefined") setShowWaFallback(true);
     }, 800);
   };
 
@@ -104,591 +111,628 @@ function BioPage() {
   };
 
   const copiarMensagem = async () => {
-    try {
-      await navigator.clipboard.writeText(mensagem);
-    } catch {
-      // ignora
-    }
+    try { await navigator.clipboard.writeText(mensagem); } catch { /* noop */ }
   };
-
-
-
 
   return (
     <>
       <style>{`
-        .bio-root{
-          --ink: oklch(24% 0.01 40);
-          --bg: oklch(97% 0.006 60);
-          --surface: oklch(100% 0 0);
-          --brand: oklch(64% 0.19 45);
-          --brand-dark: oklch(52% 0.18 35);
-          --brand-light: oklch(78% 0.15 60);
-          --muted: oklch(46% 0.01 40);
-          --whatsapp: oklch(60% 0.15 150);
-          --whatsapp-dark: oklch(50% 0.14 150);
-          --radius: 14px;
+        /* ─── Tokens ─────────────────────────────── */
+        :root {
+          --ink:        oklch(94% 0.007 52);
+          --ink-sub:    oklch(56% 0.010 48);
+          --bg:         oklch(11% 0.010 38);
+          --bg-grad:    oklch(14% 0.012 42);
+          --surf:       oklch(16% 0.012 40);
+          --surf-2:     oklch(21% 0.014 40);
+          --border:     oklch(27% 0.015 40);
+          --gold:       oklch(76% 0.14 56);
+          --gold-dim:   oklch(63% 0.16 48);
+          --gold-glow:  oklch(76% 0.14 56 / 0.14);
+          --wa:         oklch(56% 0.17 150);
+          --wa-dark:    oklch(46% 0.15 150);
+          --radius:     12px;
+        }
+
+        /* ─── Base ───────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+        .bio-root {
           background:
-            radial-gradient(1200px 600px at 50% -10%, oklch(78% 0.15 60 / 0.18), transparent 60%),
-            linear-gradient(180deg, oklch(95% 0.012 55) 0%, var(--bg) 360px);
+            radial-gradient(ellipse 140% 60% at 50% -5%, oklch(76% 0.14 56 / 0.07) 0%, transparent 60%),
+            linear-gradient(180deg, var(--bg-grad) 0%, var(--bg) 480px);
           color: var(--ink);
-          font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
-          min-height: 100vh;
+          font-family: 'Barlow', system-ui, -apple-system, sans-serif;
+          min-height: 100dvh;
           display: flex;
           justify-content: center;
-          padding: 40px 20px 60px;
-        }
-        .bio-main{ width:100%; max-width:420px; display:flex; flex-direction:column; align-items:center; }
-        .avatar{
-          width:108px; height:108px; border-radius:50%;
-          background: var(--surface);
-          display:flex; align-items:center; justify-content:center;
-          box-shadow: 0 10px 28px oklch(64% 0.19 45 / 0.25), 0 0 0 1px oklch(90% 0.02 50);
-          opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) forwards;
-          padding:12px;
-        }
-        .avatar img{ width:100%; height:100%; object-fit:contain; border-radius:50%; }
-        .bio-main h1{
-          margin-top:18px; font-size:1.4rem; font-weight:700; letter-spacing:0; text-align:center;
-          opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.08s forwards;
-        }
-        .tagline{
-          margin-top:6px; color:var(--muted); font-size:.95rem; text-align:center;
-          opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.14s forwards;
-        }
-        .links{ width:100%; margin-top:32px; display:flex; flex-direction:column; gap:14px; }
-        .link-btn{
-          display:flex; align-items:center; gap:14px; width:100%; min-height:70px; padding:16px 18px;
-          border-radius:var(--radius); border:1px solid oklch(90% 0.018 55); text-decoration:none;
-          font-size:1rem; font-weight:600; color:var(--ink); background:var(--surface);
-          box-shadow: 0 8px 24px oklch(20% 0 0 / 0.07), 0 1px 2px oklch(20% 0 0 / 0.05);
-          transition: transform .25s cubic-bezier(0.22,1,0.36,1), box-shadow .25s cubic-bezier(0.22,1,0.36,1), border-color .25s ease;
-          opacity:0; animation: rise .55s cubic-bezier(0.22,1,0.36,1) forwards;
-          cursor:pointer; font-family:inherit; text-align:left; position:relative; overflow:hidden;
-        }
-        .link-btn:nth-of-type(1){ animation-delay:.20s; }
-        .link-btn:nth-of-type(2){ animation-delay:.27s; }
-        .link-btn:nth-of-type(3){ animation-delay:.34s; }
-        .link-btn:nth-of-type(4){ animation-delay:.41s; }
-        .link-btn:active{ transform:scale(0.97); }
-        @media (hover:hover){
-          .link-btn:hover{ transform:translateY(-2px); box-shadow: 0 12px 26px oklch(20% 0 0 / 0.12); border-color:oklch(83% 0.04 55); }
-        }
-        .link-btn:focus-visible{ outline:3px solid oklch(64% 0.19 45 / 0.35); outline-offset:3px; }
-        .link-btn.primary{
-          background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
-          color:white; border-color:oklch(60% 0.15 150 / 0.4);
-          box-shadow: 0 8px 22px oklch(60% 0.15 150 / 0.35);
-        }
-        .link-btn.primary:hover{ box-shadow: 0 10px 26px oklch(60% 0.15 150 / 0.45); }
-        .link-btn.brand{
-          background: linear-gradient(135deg, var(--brand), var(--brand-dark));
-          color:white; border-color:oklch(64% 0.19 45 / 0.4);
-          box-shadow: 0 8px 22px oklch(64% 0.19 45 / 0.32);
-        }
-        .link-btn.brand:hover{ box-shadow: 0 10px 26px oklch(64% 0.19 45 / 0.42); }
-        .icon{ flex:0 0 auto; width:22px; height:22px; }
-        .label{ flex:1; text-align:left; min-width:0; }
-        .sub{ display:block; font-weight:400; font-size:.78rem; opacity:.85; margin-top:2px; }
-
-        .colors-section{
-          width:100%; margin-top:32px;
-          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .46s forwards;
-        }
-        .colors-title{
-          font-size:.85rem; font-weight:700; color:var(--muted);
-          text-transform:uppercase; letter-spacing:.04em; margin-bottom:12px; text-align:left;
-        }
-        .colors-grid{ display:grid; grid-template-columns: repeat(5,1fr); gap:10px; }
-        .color-chip{ display:flex; flex-direction:column; align-items:center; gap:6px; }
-        .swatch{
-          width:100%; aspect-ratio:1; border-radius:12px;
-          box-shadow: 0 1px 3px oklch(20% 0 0 / 0.1), inset 0 0 0 1px oklch(20% 0 0 / 0.06);
-          background-image: repeating-linear-gradient(92deg, oklch(0% 0 0 / 0.05) 0px, transparent 1px, transparent 2px, oklch(0% 0 0 / 0.03) 3px);
-        }
-        .swatch.branco{ background-color:#F1EFEA; }
-        .swatch.light-green{ background-color:#DCE1D8; }
-        .swatch.bege{ background-color:#DBD3C4; }
-        .swatch.marron{ background-color:#C8C2AF; }
-        .swatch.cinza{ background-color:#A6AEC0; }
-        .color-name{ font-size:.68rem; font-weight:600; color:var(--muted); text-align:center; }
-
-        .bio-footer{
-          margin-top:40px; color:var(--muted); font-size:.8rem; text-align:center;
-          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .5s forwards;
+          padding: 52px 20px 80px;
         }
 
-        @keyframes rise{ from{ opacity:0; transform:translateY(10px); } to{ opacity:1; transform:translateY(0); } }
-
-        @media (prefers-reduced-motion: reduce){
-          .avatar, .bio-main h1, .tagline, .link-btn, .bio-footer, .colors-section{
-            animation:none !important; opacity:1 !important; transform:none !important;
-          }
+        .bio-main {
+          width: 100%;
+          max-width: 430px;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
         }
 
-        .lightbox{
-          position:fixed; inset:0; background: oklch(0% 0 0 / 0.75);
-          display:flex; align-items:center; justify-content:center;
-          padding:20px; z-index:50; cursor:zoom-out;
-          animation: fadein .2s ease-out;
+        /* ─── Avatar ─────────────────────────────── */
+        .avatar-ring {
+          width: 100px; height: 100px;
+          border-radius: 50%;
+          padding: 2.5px;
+          background: conic-gradient(from 180deg, var(--gold-dim), var(--gold), var(--gold-dim));
+          box-shadow: 0 0 0 5px oklch(76% 0.14 56 / 0.12), 0 16px 48px oklch(76% 0.14 56 / 0.16);
         }
-        .cores-panel{
-          background: var(--surface);
-          border-radius: 14px;
-          padding: 22px 18px 20px;
+        .avatar-inner {
+          width: 100%; height: 100%;
+          border-radius: 50%;
+          background: var(--bg);
+          display: flex; align-items: center; justify-content: center;
+          padding: 10px;
+        }
+        .avatar-inner img { width: 100%; height: 100%; object-fit: contain; border-radius: 50%; }
+
+        /* ─── Header ─────────────────────────────── */
+        .bio-name {
+          margin-top: 22px;
+          font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+          font-size: 2.1rem;
+          font-weight: 700;
+          letter-spacing: -0.02em;
+          text-align: center;
+          color: var(--ink);
+          text-wrap: balance;
+        }
+        .bio-tagline {
+          margin-top: 7px;
+          font-size: 0.75rem;
+          font-weight: 600;
+          color: var(--gold);
+          text-align: center;
+          letter-spacing: 0.12em;
+          text-transform: uppercase;
+        }
+
+        /* ─── Trust bar ──────────────────────────── */
+        .trust-bar {
+          margin-top: 20px;
+          display: flex;
+          flex-wrap: wrap;
+          gap: 8px 8px;
+          justify-content: center;
+        }
+        .trust-chip {
+          display: inline-flex;
+          align-items: center;
+          gap: 6px;
+          font-size: 0.73rem;
+          font-weight: 500;
+          color: var(--ink-sub);
+          background: var(--surf);
+          border: 1px solid var(--border);
+          padding: 5px 11px;
+          border-radius: 999px;
+        }
+        .trust-chip .dot { width: 6px; height: 6px; border-radius: 50%; background: var(--wa); flex-shrink: 0; }
+        .trust-chip.rating { color: var(--gold); border-color: oklch(76% 0.14 56 / 0.25); background: oklch(76% 0.14 56 / 0.07); }
+
+        /* ─── Links section ──────────────────────── */
+        .links {
+          width: 100%;
+          margin-top: 38px;
+          display: flex;
+          flex-direction: column;
+          gap: 10px;
+        }
+
+        /* Main WhatsApp CTA */
+        .wa-cta {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          width: 100%;
+          min-height: 66px;
+          padding: 16px 22px;
+          border-radius: var(--radius);
+          border: none;
+          text-decoration: none;
+          font-family: 'Barlow', system-ui, sans-serif;
+          font-size: 1rem;
+          font-weight: 700;
+          color: white;
+          background: linear-gradient(135deg, var(--wa), var(--wa-dark));
+          box-shadow: 0 10px 36px oklch(56% 0.17 150 / 0.30);
+          cursor: pointer;
+          transition: transform 0.22s cubic-bezier(0.22,1,0.36,1), box-shadow 0.22s ease;
+          position: relative;
+          overflow: hidden;
+        }
+        .wa-cta::after {
+          content: "";
+          position: absolute; inset: 0;
+          border-radius: var(--radius);
+          box-shadow: 0 0 0 0 oklch(56% 0.17 150 / 0.55);
+          animation: wa-pulse 2.4s ease-out 1.5s 3;
+          pointer-events: none;
+        }
+        .wa-cta:hover { transform: translateY(-2px); box-shadow: 0 14px 40px oklch(56% 0.17 150 / 0.42); }
+        .wa-cta:active { transform: scale(0.98); }
+        .wa-cta .label { flex: 1; text-align: left; }
+        .wa-cta .sub { display: block; font-weight: 400; font-size: 0.8rem; opacity: 0.82; margin-top: 2px; }
+
+        /* Quick shortcuts */
+        .quick-row {
+          display: flex;
+          gap: 8px;
+          width: 100%;
+        }
+        .quick-btn {
+          flex: 1;
+          min-height: 50px;
+          padding: 8px 6px;
+          border-radius: 10px;
+          border: 1px solid var(--border);
+          background: var(--surf);
+          color: var(--ink-sub);
+          font-family: 'Barlow', system-ui, sans-serif;
+          font-size: 0.74rem;
+          font-weight: 600;
+          line-height: 1.3;
+          cursor: pointer;
+          text-align: center;
+          transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
+        }
+        .quick-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
+        .quick-btn:active { transform: scale(0.97); }
+
+        /* ─── Catalog ────────────────────────────── */
+        .catalog-section {
+          width: 100%;
+          margin-top: 48px;
+        }
+        .catalog-eyebrow {
+          font-size: 0.68rem;
+          font-weight: 700;
+          color: var(--gold);
+          text-transform: uppercase;
+          letter-spacing: 0.14em;
+          margin-bottom: 18px;
+          padding-left: 1px;
+        }
+        .catalog-stack {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+        }
+
+        /* Product card */
+        .product-card {
+          background: var(--surf);
+          border-radius: var(--radius);
+          border: 1px solid var(--border);
+          overflow: hidden;
+          transition: border-color 0.25s ease;
+        }
+        .product-card:hover { border-color: oklch(38% 0.020 44); }
+
+        /* Product image wrap */
+        .p-img-wrap {
+          position: relative;
+          width: 100%;
+          aspect-ratio: 4/3;
+          overflow: hidden;
+          background: oklch(9% 0.006 38);
+        }
+        .p-img-wrap img {
+          width: 100%; height: 100%;
+          object-fit: contain;
+          transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .p-img-wrap:hover img { transform: scale(1.03); }
+
+        /* Carousel controls */
+        .c-btn {
+          position: absolute;
+          top: 50%; transform: translateY(-50%);
+          width: 36px; height: 36px;
+          border-radius: 50%;
+          background: oklch(8% 0 0 / 0.68);
+          border: 1px solid oklch(100% 0 0 / 0.10);
+          color: oklch(88% 0 0);
+          font-size: 1.25rem;
+          cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          transition: background 0.18s ease, color 0.18s ease;
+          z-index: 2;
+        }
+        .c-btn:hover { background: var(--gold); color: oklch(10% 0 0); border-color: transparent; }
+        .c-btn:active { transform: translateY(-50%) scale(0.92); }
+        .c-prev { left: 10px; }
+        .c-next { right: 10px; }
+        .c-dots {
+          position: absolute;
+          bottom: 10px; left: 50%; transform: translateX(-50%);
+          display: flex; gap: 5px; z-index: 2;
+        }
+        .c-dot {
+          width: 6px; height: 6px;
+          border-radius: 50%; border: none; cursor: pointer; padding: 0;
+          background: oklch(100% 0 0 / 0.32);
+          transition: background 0.2s ease, transform 0.2s ease;
+        }
+        .c-dot.on { background: var(--gold); transform: scale(1.5); }
+
+        /* Colors badge */
+        .colors-badge {
+          position: absolute; bottom: 10px; right: 10px;
+          background: oklch(8% 0 0 / 0.70);
+          backdrop-filter: blur(10px);
+          -webkit-backdrop-filter: blur(10px);
+          border: 1px solid oklch(100% 0 0 / 0.10);
+          border-radius: 999px;
+          padding: 5px 13px;
+          font-size: 0.71rem;
+          font-weight: 700;
+          color: oklch(88% 0 0);
+          cursor: pointer;
+          font-family: 'Barlow', system-ui, sans-serif;
+          transition: background 0.18s ease, color 0.18s ease, border-color 0.18s ease;
+          z-index: 3;
+        }
+        .colors-badge:hover { background: var(--gold); color: oklch(10% 0 0); border-color: transparent; }
+
+        /* Product body */
+        .product-body { padding: 18px 20px 20px; }
+        .product-name {
+          font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+          font-size: 1.12rem;
+          font-weight: 700;
+          color: var(--ink);
+          margin: 0 0 5px;
+          letter-spacing: -0.01em;
+        }
+        .product-desc {
+          font-size: 0.81rem;
+          color: var(--ink-sub);
+          margin: 0 0 14px;
+          line-height: 1.55;
+        }
+        .product-swatches { display: flex; gap: 8px; margin-bottom: 16px; flex-wrap: wrap; }
+        .sw {
+          width: 20px; height: 20px;
+          border-radius: 50%;
+          box-shadow: 0 0 0 2px var(--surf), 0 0 0 3px oklch(100% 0 0 / 0.18);
+        }
+
+        /* Product CTA */
+        .product-cta {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 9px;
+          width: 100%;
+          min-height: 48px;
+          padding: 11px 16px;
+          border-radius: 9px;
+          border: none;
+          font-family: 'Barlow', system-ui, sans-serif;
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: white;
+          background: linear-gradient(135deg, var(--wa), var(--wa-dark));
+          cursor: pointer;
+          text-decoration: none;
+          box-shadow: 0 4px 18px oklch(56% 0.17 150 / 0.24);
+          transition: transform 0.2s ease, box-shadow 0.2s ease;
+        }
+        .product-cta:hover { transform: translateY(-1px); box-shadow: 0 6px 24px oklch(56% 0.17 150 / 0.36); }
+        .product-cta:active { transform: scale(0.98); }
+
+        /* ─── Lightbox ───────────────────────────── */
+        .lightbox {
+          position: fixed; inset: 0;
+          background: oklch(0% 0 0 / 0.84);
+          display: flex; align-items: center; justify-content: center;
+          padding: 20px; z-index: 50; cursor: zoom-out;
+          animation: fadein 0.2s ease-out;
+          backdrop-filter: blur(8px);
+          -webkit-backdrop-filter: blur(8px);
+        }
+        .cores-panel {
+          background: var(--surf);
+          border: 1px solid var(--border);
+          border-radius: 16px;
+          padding: 24px 20px 22px;
           width: 100%; max-width: 430px;
-          box-shadow: 0 20px 60px oklch(0% 0 0 / 0.5);
           cursor: auto;
         }
-        .cores-panel .colors-title{ text-align:center; margin-bottom:14px; }
-        .cores-image{
-          width:100%; max-height:62vh; object-fit:contain; border-radius:10px; display:block; margin-bottom:16px;
-          box-shadow: 0 6px 18px oklch(0% 0 0 / 0.16);
+        .cores-panel-title {
+          font-family: 'Barlow Condensed', 'Barlow', system-ui, sans-serif;
+          font-size: 0.8rem;
+          font-weight: 700;
+          color: var(--gold);
+          text-transform: uppercase;
+          letter-spacing: 0.1em;
+          text-align: center;
+          margin-bottom: 14px;
+        }
+        .cores-image {
+          width: 100%; max-height: 62vh;
+          object-fit: contain;
+          border-radius: 10px;
+          display: block;
+        }
+        .lightbox-close {
+          position: absolute; top: 20px; right: 20px;
+          width: 40px; height: 40px; border-radius: 50%;
+          background: oklch(100% 0 0 / 0.10);
+          border: 1px solid oklch(100% 0 0 / 0.12);
+          color: oklch(85% 0 0);
+          font-size: 1.35rem;
+          cursor: pointer;
+          display: flex; align-items: center; justify-content: center;
+          backdrop-filter: blur(8px);
+          transition: background 0.15s ease;
+        }
+        .lightbox-close:hover { background: oklch(100% 0 0 / 0.18); }
+
+        /* WA Fallback */
+        .wa-panel-text { font-size: 0.88rem; color: var(--ink-sub); margin: 0 0 12px; text-align: center; }
+        .wa-panel-msg {
+          background: oklch(11% 0.010 38);
+          border: 1px solid var(--border);
+          border-radius: 10px; padding: 12px;
+          font-size: 0.88rem; color: var(--ink);
+          margin-bottom: 14px; text-align: center;
+        }
+        .wa-panel-actions { display: flex; flex-direction: column; gap: 9px; }
+        .wa-panel-btn {
+          display: flex; align-items: center; justify-content: center;
+          min-height: 48px; padding: 12px 16px;
+          border-radius: 9px;
+          font-family: 'Barlow', system-ui, sans-serif;
+          font-size: 0.9rem; font-weight: 600;
+          cursor: pointer; text-decoration: none; border: none;
+          transition: opacity 0.18s ease;
+        }
+        .wa-panel-btn:hover { opacity: 0.85; }
+        .wa-panel-btn.green { background: linear-gradient(135deg, var(--wa), var(--wa-dark)); color: white; }
+        .wa-panel-btn.ghost { background: var(--surf-2); color: var(--ink); border: 1px solid var(--border); }
+
+        /* ─── Footer ─────────────────────────────── */
+        .bio-footer {
+          margin-top: 48px;
+          color: oklch(34% 0.008 44);
+          font-size: 0.72rem;
+          font-weight: 500;
+          text-align: center;
+          letter-spacing: 0.07em;
+          text-transform: uppercase;
         }
 
-        .lightbox-close{
-          position:absolute; top:20px; right:20px;
-          width:40px; height:40px; border-radius:50%;
-          background: oklch(100% 0 0 / 0.15); color:white;
-          border:none; font-size:1.4rem; cursor:pointer;
-          display:flex; align-items:center; justify-content:center;
+        /* ─── Animations ─────────────────────────── */
+        @keyframes rise {
+          from { opacity: 0; transform: translateY(14px); }
+          to   { opacity: 1; transform: translateY(0); }
         }
-        .wa-panel .wa-text{ font-size:.9rem; color:var(--muted); margin:0 0 12px; text-align:center; }
-        .wa-panel .wa-message{
-          background: oklch(96% 0.01 60); border:1px solid oklch(90% 0.018 55);
-          border-radius:10px; padding:12px; font-size:.9rem; color:var(--ink);
-          margin-bottom:14px; text-align:center;
+        @keyframes fadein {
+          from { opacity: 0; } to { opacity: 1; }
         }
-        .wa-panel .wa-actions{ display:flex; flex-direction:column; gap:10px; }
-        .wa-panel .link-btn{ min-height:52px; }
-        @keyframes fadein{ from{ opacity:0; } to{ opacity:1; } }
-
-        .trust-bar{
-          margin-top:14px; display:flex; flex-wrap:wrap; gap:8px 10px; justify-content:center;
-          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .17s forwards;
-        }
-        .trust-chip{
-          display:inline-flex; align-items:center; gap:6px;
-          font-size:.75rem; font-weight:600; color:var(--muted);
-          background:var(--surface); border:1px solid oklch(90% 0.018 55);
-          padding:6px 10px; border-radius:999px;
-          box-shadow: 0 1px 2px oklch(20% 0 0 / 0.04);
-        }
-        .trust-chip .dot{ width:6px; height:6px; border-radius:50%; background: var(--whatsapp); }
-        .trust-chip.rating{ color: var(--brand-dark); }
-
-        .quick-row{
-          display:flex; gap:10px; width:100%; margin-top:4px;
-          opacity:0; animation: rise .55s cubic-bezier(0.22,1,0.36,1) .23s forwards;
-        }
-        .quick-btn{
-          flex:1; min-height:52px; padding:8px 10px;
-          border-radius:12px; border:1px solid oklch(90% 0.018 55);
-          background:var(--surface); color:var(--ink);
-          font-family:inherit; font-size:.78rem; font-weight:600; line-height:1.2;
-          cursor:pointer; text-align:center;
-          box-shadow: 0 4px 12px oklch(20% 0 0 / 0.05);
-          transition: transform .2s ease, border-color .2s ease;
-        }
-        .quick-btn:hover{ border-color: var(--brand); transform: translateY(-1px); }
-        .quick-btn:active{ transform: scale(0.97); }
-
-        .link-btn.primary{ position:relative; }
-        .link-btn.primary::after{
-          content:""; position:absolute; inset:0; border-radius:var(--radius);
-          box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0.55);
-          animation: wa-pulse 2.2s ease-out 1.2s 3;
-          pointer-events:none;
-        }
-        @keyframes wa-pulse{
-          0%{ box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0.55); }
-          70%{ box-shadow: 0 0 0 14px oklch(60% 0.15 150 / 0); }
-          100%{ box-shadow: 0 0 0 0 oklch(60% 0.15 150 / 0); }
-        }
-        @media (prefers-reduced-motion: reduce){
-          .link-btn.primary::after{ animation:none; }
+        @keyframes wa-pulse {
+          0%   { box-shadow: 0 0 0 0   oklch(56% 0.17 150 / 0.55); }
+          70%  { box-shadow: 0 0 0 14px oklch(56% 0.17 150 / 0); }
+          100% { box-shadow: 0 0 0 0   oklch(56% 0.17 150 / 0); }
         }
 
-        @media (max-width: 360px){
-          .bio-main h1{ font-size:1.25rem; }
-          .links{ margin-top:26px; }
+        .avatar-ring  { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.05s forwards; }
+        .bio-name     { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.12s forwards; }
+        .bio-tagline  { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.18s forwards; }
+        .trust-bar    { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.23s forwards; }
+        .links        { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.30s forwards; }
+        .catalog-section { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.38s forwards; }
+        .bio-footer   { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.44s forwards; }
+
+        @media (prefers-reduced-motion: reduce) {
+          .avatar-ring, .bio-name, .bio-tagline, .trust-bar,
+          .links, .catalog-section, .bio-footer {
+            animation: none !important; opacity: 1 !important; transform: none !important;
+          }
+          .wa-cta::after { animation: none; }
         }
 
-        .catalog-section{
-          width:100%; margin-top:36px;
-          opacity:0; animation: rise .6s cubic-bezier(0.22,1,0.36,1) .52s forwards;
+        @media (max-width: 360px) {
+          .bio-name { font-size: 1.75rem; }
+          .catalog-section { margin-top: 36px; }
         }
-        .catalog-title{
-          font-size:.85rem; font-weight:700; color:var(--muted);
-          text-transform:uppercase; letter-spacing:.04em; margin-bottom:14px; text-align:left;
-        }
-        .product-card{
-          background:var(--surface); border-radius:var(--radius);
-          border:1px solid oklch(90% 0.018 55);
-          box-shadow: 0 8px 24px oklch(20% 0 0 / 0.07), 0 1px 2px oklch(20% 0 0 / 0.04);
-          overflow:hidden;
-        }
-        .product-img-wrap{
-          position:relative; width:100%; aspect-ratio:3/4; overflow:hidden; cursor:zoom-in;
-          background: oklch(14% 0 0);
-        }
-        .product-img-wrap img{
-          width:100%; height:100%; object-fit:contain;
-          transition: transform .35s cubic-bezier(0.22,1,0.36,1);
-        }
-        .product-img-wrap:hover img{ transform: scale(1.02); }
-        .carousel-btn{
-          position:absolute; top:50%; transform:translateY(-50%);
-          width:36px; height:36px; border-radius:50%;
-          background: oklch(100% 0 0 / 0.82); color:var(--ink);
-          border:none; font-size:1.4rem; line-height:1; cursor:pointer;
-          display:flex; align-items:center; justify-content:center;
-          box-shadow: 0 2px 8px oklch(0% 0 0 / 0.18);
-          transition: background .15s ease, transform .15s ease;
-          z-index:2;
-        }
-        .carousel-btn:hover{ background: oklch(100% 0 0); }
-        .carousel-btn:active{ transform:translateY(-50%) scale(0.93); }
-        .carousel-prev{ left:10px; }
-        .carousel-next{ right:10px; }
-        .carousel-dots{
-          position:absolute; bottom:10px; left:50%; transform:translateX(-50%);
-          display:flex; gap:6px; z-index:2;
-        }
-        .carousel-dot{
-          width:7px; height:7px; border-radius:50%; border:none; cursor:pointer; padding:0;
-          background: oklch(100% 0 0 / 0.45);
-          transition: background .2s ease, transform .2s ease;
-        }
-        .carousel-dot.active{ background: oklch(100% 0 0); transform:scale(1.3); }
-        .product-colors-badge{
-          position:absolute; bottom:10px; right:10px;
-          background: oklch(100% 0 0 / 0.9); border-radius:999px;
-          padding:5px 10px; font-size:.72rem; font-weight:700; color:var(--ink);
-          box-shadow: 0 2px 8px oklch(0% 0 0 / 0.12);
-          cursor:pointer; border:none; font-family:inherit;
-          transition: background .2s ease;
-        }
-        .product-colors-badge:hover{ background: oklch(100% 0 0); }
-        .product-body{ padding:16px 18px; }
-        .product-name{ font-size:1rem; font-weight:700; margin:0 0 4px; }
-        .product-desc{ font-size:.82rem; color:var(--muted); margin:0 0 14px; line-height:1.45; }
-        .product-swatches{ display:flex; gap:7px; margin-bottom:16px; flex-wrap:wrap; }
-        .mini-swatch{
-          width:26px; height:26px; border-radius:6px;
-          box-shadow: 0 1px 3px oklch(0% 0 0 / 0.15), inset 0 0 0 1px oklch(0% 0 0 / 0.08);
-          position:relative;
-        }
-        .mini-swatch[title]{ cursor:default; }
-        .swatch-branco{ background:#F1EFEA; }
-        .swatch-bege{ background:#D4C9B5; }
-        .swatch-marron{ background:#9C8B76; }
-        .swatch-preto{ background:#1C1C1C; }
-        .product-cta{
-          display:flex; align-items:center; gap:10px; width:100%; min-height:52px; padding:12px 16px;
-          border-radius:10px; border:none; font-family:inherit; font-size:.9rem; font-weight:700;
-          background: linear-gradient(135deg, var(--whatsapp), var(--whatsapp-dark));
-          color:white; cursor:pointer; text-decoration:none; justify-content:center;
-          box-shadow: 0 6px 18px oklch(60% 0.15 150 / 0.32);
-          transition: transform .2s ease, box-shadow .2s ease;
-        }
-        .product-cta:hover{ transform:translateY(-1px); box-shadow: 0 8px 22px oklch(60% 0.15 150 / 0.42); }
-        .product-cta:active{ transform:scale(0.98); }
-
       `}</style>
 
       <div className="bio-root">
         <main className="bio-main">
-          <div className="avatar">
-            <img src={avatarAsset.url} alt="Ágil Persianas" />
-          </div>
-          <h1>Ágil Persianas</h1>
-          <p className="tagline">Persianas sob medida</p>
 
+          {/* Avatar */}
+          <div className="avatar-ring">
+            <div className="avatar-inner">
+              <img src={avatarAsset.url} alt="Ágil Persianas" />
+            </div>
+          </div>
+
+          {/* Identity */}
+          <h1 className="bio-name">Ágil Persianas</h1>
+          <p className="bio-tagline">Persianas sob medida</p>
+
+          {/* Trust */}
           <div className="trust-bar" aria-label="Informações rápidas">
-            <span className="trust-chip rating" aria-label="Avaliação 4.9 de 5">★ 4,9 · +500 clientes</span>
+            <span className="trust-chip rating" aria-label="Avaliação 4.9">★ 4,9 · +500 clientes</span>
             <span className="trust-chip"><span className="dot" />Seg–Sáb · 8h às 18h</span>
           </div>
 
+          {/* Actions */}
           <div className="links">
             <a
               href={whatsappUrl}
-              className="link-btn primary"
+              className="wa-cta"
               target="_blank"
               rel="noopener"
-              aria-label="Abrir WhatsApp e pedir orçamento"
+              aria-label="Fazer orçamento pelo WhatsApp"
               onClick={handleWhatsappClick}
             >
-              <svg className="icon" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
-              </svg>
+              {WA_ICON}
               <span className="label">
                 Fazer orçamento pelo WhatsApp
                 <span className="sub">Resposta rápida, sem compromisso</span>
               </span>
             </a>
 
-            <div className="quick-row" role="group" aria-label="Mensagens rápidas pelo WhatsApp">
-              <button
-                type="button"
-                className="quick-btn"
-                onClick={() => openWhatsapp("Olá! Gostaria de um orçamento de persianas.")}
-              >
-                Pedir orçamento
-              </button>
-              <button
-                type="button"
-                className="quick-btn"
-                onClick={() => openWhatsapp("Olá! Tenho dúvidas sobre cores e modelos de persianas.")}
-              >
-                Dúvidas sobre cores
-              </button>
-              <button
-                type="button"
-                className="quick-btn"
-                onClick={() => openWhatsapp("Olá! Quero agendar uma visita técnica para medir.")}
-              >
-                Agendar visita
-              </button>
+            <div className="quick-row" role="group" aria-label="Mensagens rápidas">
+              <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Gostaria de um orçamento de persianas.")}>Pedir orçamento</button>
+              <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Tenho dúvidas sobre cores e modelos de persianas.")}>Dúvidas sobre cores</button>
+              <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Quero agendar uma visita técnica para medir.")}>Agendar visita</button>
             </div>
-
           </div>
 
-
+          {/* Catalog */}
           <section className="catalog-section" aria-label="Nossos produtos">
-            <div className="catalog-title">Nossos produtos</div>
+            <p className="catalog-eyebrow">Nossos produtos</p>
+            <div className="catalog-stack">
 
-            {/* Card 1 – Tecido Liso */}
-            <div className="product-card">
-              <ProductCarousel
-                images={['/blackout-liso-produto.png', '/blackout-liso-bege.png']}
-                alt="Cortina Rolô Blackout Tecido Liso"
-                badge={
-                  <button type="button" className="product-colors-badge" onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }} aria-label="Ver todas as cores disponíveis">Ver cores ›</button>
-                }
-              />
-              <div className="product-body">
-                <p className="product-name">Cortina Rolô Blackout · Tecido Liso</p>
-                <p className="product-desc">Bloqueia 100% da luz · Sob medida</p>
-                <div className="product-swatches" aria-label="Cores disponíveis">
-                  <span className="mini-swatch swatch-branco" title="Branco" />
-                  <span className="mini-swatch swatch-bege" title="Bege" />
-                  <span className="mini-swatch swatch-marron" title="Marron" />
-                  <span className="mini-swatch swatch-preto" title="Preto" />
+              {/* Tecido Liso */}
+              <div className="product-card">
+                <ProductCarousel
+                  images={["/blackout-liso-produto.png", "/blackout-liso-bege.png"]}
+                  alt="Cortina Rolô Blackout Tecido Liso"
+                  badge={
+                    <button type="button" className="colors-badge" onClick={(e) => { e.stopPropagation(); setShowLisoCores(true); }} aria-label="Ver cores">Ver cores ›</button>
+                  }
+                />
+                <div className="product-body">
+                  <p className="product-name">Cortina Rolô Blackout · Tecido Liso</p>
+                  <p className="product-desc">Bloqueia 100% da luz · Sob medida</p>
+                  <div className="product-swatches" aria-label="Cores disponíveis">
+                    <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
+                    <span className="sw" style={{ background: "#D4C9B5" }} title="Bege" />
+                    <span className="sw" style={{ background: "#9C8B76" }} title="Marron" />
+                    <span className="sw" style={{ background: "#1C1C1C" }} title="Preto" />
+                  </div>
+                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Tecido Liso. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                    {WA_ICON} Pedir orçamento
+                  </a>
                 </div>
-                <a
-                  className="product-cta"
-                  href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Tecido Liso. Podem me passar um orçamento?")}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="Pedir orçamento da Cortina Rolô Blackout Tecido Liso pelo WhatsApp"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
-                  </svg>
-                  Pedir orçamento
-                </a>
               </div>
-            </div>
 
-            {/* Card 2 – Cortina Romana */}
-            <div className="product-card" style={{marginTop: '16px'}}>
-              <ProductCarousel
-                images={['/romana-blackout-foto1.jpg', '/romana-blackout-foto2.jpg']}
-                alt="Cortina Romana Blackout Texturizado Bege"
-                style={{aspectRatio:'3/4', background:'#1a1a1a'}}
-              />
-              <div className="product-body">
-                <p className="product-name">Cortina Romana Blackout · Texturizado</p>
-                <p className="product-desc">Bloqueia 100% da luz · Dobras estruturadas · Sob medida</p>
-                <div className="product-swatches" aria-label="Cores disponíveis">
-                  <span className="mini-swatch" style={{background:'#DBD3C4'}} title="Bege" />
+              {/* Romana */}
+              <div className="product-card">
+                <ProductCarousel
+                  images={["/romana-blackout-foto1.jpg", "/romana-blackout-foto2.jpg"]}
+                  alt="Cortina Romana Blackout Texturizado Bege"
+                  style={{ aspectRatio: "3/4", background: "oklch(9% 0.006 38)" }}
+                />
+                <div className="product-body">
+                  <p className="product-name">Cortina Romana Blackout · Texturizado</p>
+                  <p className="product-desc">Bloqueia 100% da luz · Dobras estruturadas · Sob medida</p>
+                  <div className="product-swatches" aria-label="Cores disponíveis">
+                    <span className="sw" style={{ background: "#DBD3C4" }} title="Bege" />
+                  </div>
+                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Romana Blackout Texturizado Bege. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                    {WA_ICON} Pedir orçamento
+                  </a>
                 </div>
-                <a
-                  className="product-cta"
-                  href={buildWaUrl("Olá! Tenho interesse na Cortina Romana Blackout Texturizado Bege. Podem me passar um orçamento?")}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="Pedir orçamento da Cortina Romana pelo WhatsApp"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
-                  </svg>
-                  Pedir orçamento
-                </a>
               </div>
-            </div>
 
-            {/* Card 3 – Double Vision */}
-            <div className="product-card" style={{marginTop: '16px'}}>
-              <ProductCarousel
-                images={['/double-vision-foto1.jpg', '/double-vision-foto2.jpg', '/double-vision-foto3.jpg']}
-                alt="Cortina Double Vision Semi Blackout"
-                style={{aspectRatio:'4/3', background:'#1a1a1a'}}
-              />
-              <div className="product-body">
-                <p className="product-name">Cortina Double Vision · Semi Blackout</p>
-                <p className="product-desc">Controle de luz e privacidade · Faixas alternadas opacas e translúcidas · Sob medida</p>
-                <div className="product-swatches" aria-label="Cores disponíveis">
-                  <span className="mini-swatch" style={{background:'#F1EFEA'}} title="Branco" />
-                  <span className="mini-swatch" style={{background:'#D4C9B5'}} title="Bege" />
-                  <span className="mini-swatch" style={{background:'#A6AEC0'}} title="Cinza" />
+              {/* Double Vision */}
+              <div className="product-card">
+                <ProductCarousel
+                  images={["/double-vision-foto1.jpg", "/double-vision-foto2.jpg", "/double-vision-foto3.jpg"]}
+                  alt="Cortina Double Vision Semi Blackout"
+                />
+                <div className="product-body">
+                  <p className="product-name">Cortina Double Vision · Semi Blackout</p>
+                  <p className="product-desc">Controle de luz e privacidade · Faixas opacas e translúcidas · Sob medida</p>
+                  <div className="product-swatches" aria-label="Cores disponíveis">
+                    <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
+                    <span className="sw" style={{ background: "#D4C9B5" }} title="Bege" />
+                    <span className="sw" style={{ background: "#A6AEC0" }} title="Cinza" />
+                  </div>
+                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Double Vision Semi Blackout. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                    {WA_ICON} Pedir orçamento
+                  </a>
                 </div>
-                <a
-                  className="product-cta"
-                  href={buildWaUrl("Olá! Tenho interesse na Cortina Double Vision Semi Blackout. Podem me passar um orçamento?")}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="Pedir orçamento da Cortina Double Vision pelo WhatsApp"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
-                  </svg>
-                  Pedir orçamento
-                </a>
               </div>
-            </div>
 
-            {/* Card 4 – Blackout Texturizado */}
-            <div className="product-card" style={{marginTop: '16px'}}>
-              <ProductCarousel
-                images={[blackoutCoresAsset.url]}
-                alt="Cores do Blackout Texturizado"
-                style={{aspectRatio:'4/3', background:'#f5f3ef', cursor:'zoom-in'}}
-                imgStyle={{objectFit:'cover'}}
-                badge={
-                  <button type="button" className="product-colors-badge" onClick={(e) => { e.stopPropagation(); setShowCores(true); }} aria-label="Ver todas as cores disponíveis">Ver cores ›</button>
-                }
-              />
-              <div className="product-body">
-                <p className="product-name">Cortina Rolô Blackout · Texturizado</p>
-                <p className="product-desc">Bloqueia 100% da luz · Textura exclusiva · Sob medida</p>
-                <div className="product-swatches" aria-label="Cores disponíveis">
-                  <span className="mini-swatch" style={{background:'#F1EFEA'}} title="Branco" />
-                  <span className="mini-swatch" style={{background:'#DCE1D8'}} title="Verde Claro" />
-                  <span className="mini-swatch" style={{background:'#DBD3C4'}} title="Bege" />
-                  <span className="mini-swatch" style={{background:'#C8C2AF'}} title="Marron" />
-                  <span className="mini-swatch" style={{background:'#A6AEC0'}} title="Cinza" />
+              {/* Blackout Texturizado */}
+              <div className="product-card">
+                <ProductCarousel
+                  images={[blackoutCoresAsset.url]}
+                  alt="Cortina Rolô Blackout Texturizado — paleta de cores"
+                  style={{ background: "#f0ede8" }}
+                  imgStyle={{ objectFit: "cover" }}
+                  badge={
+                    <button type="button" className="colors-badge" onClick={(e) => { e.stopPropagation(); setShowCores(true); }} aria-label="Ver cores">Ver cores ›</button>
+                  }
+                />
+                <div className="product-body">
+                  <p className="product-name">Cortina Rolô Blackout · Texturizado</p>
+                  <p className="product-desc">Bloqueia 100% da luz · Textura exclusiva · Sob medida</p>
+                  <div className="product-swatches" aria-label="Cores disponíveis">
+                    <span className="sw" style={{ background: "#F1EFEA" }} title="Branco" />
+                    <span className="sw" style={{ background: "#DCE1D8" }} title="Verde Claro" />
+                    <span className="sw" style={{ background: "#DBD3C4" }} title="Bege" />
+                    <span className="sw" style={{ background: "#C8C2AF" }} title="Marron" />
+                    <span className="sw" style={{ background: "#A6AEC0" }} title="Cinza" />
+                  </div>
+                  <a className="product-cta" href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Texturizado. Podem me passar um orçamento?")} target="_blank" rel="noopener">
+                    {WA_ICON} Pedir orçamento
+                  </a>
                 </div>
-                <a
-                  className="product-cta"
-                  href={buildWaUrl("Olá! Tenho interesse na Cortina Rolô Blackout Texturizado. Podem me passar um orçamento?")}
-                  target="_blank"
-                  rel="noopener"
-                  aria-label="Pedir orçamento do Blackout Texturizado pelo WhatsApp"
-                >
-                  <svg width="18" height="18" viewBox="0 0 24 24" fill="white" aria-hidden="true">
-                    <path d="M12.04 2C6.58 2 2.13 6.45 2.13 11.91c0 1.75.46 3.45 1.32 4.95L2.05 22l5.25-1.38c1.45.79 3.08 1.21 4.74 1.21h.01c5.46 0 9.91-4.45 9.91-9.91C21.96 6.45 17.5 2 12.04 2zm5.8 14.02c-.24.68-1.4 1.3-1.93 1.38-.49.08-1.11.11-1.79-.11-.41-.13-.95-.31-1.63-.6-2.87-1.24-4.75-4.14-4.89-4.33-.14-.19-1.17-1.55-1.17-2.96 0-1.41.74-2.1 1-2.39.26-.29.57-.36.76-.36.19 0 .38 0 .55.01.18.01.41-.07.64.49.24.58.81 2 .88 2.14.07.14.12.31.02.5-.09.19-.14.31-.28.48-.14.17-.29.37-.42.5-.14.14-.28.29-.12.57.16.28.71 1.17 1.52 1.9 1.05.94 1.93 1.23 2.21 1.37.28.14.44.12.6-.07.16-.19.68-.79.87-1.06.19-.28.37-.23.62-.14.26.09 1.63.77 1.91.91.28.14.47.21.54.33.07.12.07.68-.17 1.36z" />
-                  </svg>
-                  Pedir orçamento
-                </a>
               </div>
+
             </div>
           </section>
 
           <footer className="bio-footer">Ágil Persianas</footer>
         </main>
 
+        {/* Lightbox – Blackout Texturizado cores */}
         {showCores && (
-          <div
-            className="lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Cores do Blackout Texturizado"
-            onClick={() => setShowCores(false)}
-          >
-            <button
-              type="button"
-              className="lightbox-close"
-              aria-label="Fechar"
-              onClick={(e) => {
-                e.stopPropagation();
-                setShowCores(false);
-              }}
-            >
-              ×
-            </button>
-            <div
-              className="cores-panel"
-              onClick={(e) => e.stopPropagation()}
-            >
-              <div className="colors-title">Cores · Blackout Texturizado</div>
-              <img
-                className="cores-image"
-                src={blackoutCoresAsset.url}
-                alt="Amostras de tecido Blackout Texturizado"
-              />
-            </div>
-          </div>
-        )}
-
-        {showLisoCores && (
-          <div
-            className="lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label="Cores do Blackout Tecido Liso"
-            onClick={() => setShowLisoCores(false)}
-          >
-            <button
-              type="button"
-              className="lightbox-close"
-              aria-label="Fechar"
-              onClick={(e) => { e.stopPropagation(); setShowLisoCores(false); }}
-            >
-              ×
-            </button>
+          <div className="lightbox" role="dialog" aria-modal="true" aria-label="Cores do Blackout Texturizado" onClick={() => setShowCores(false)}>
+            <button type="button" className="lightbox-close" aria-label="Fechar" onClick={(e) => { e.stopPropagation(); setShowCores(false); }}>×</button>
             <div className="cores-panel" onClick={(e) => e.stopPropagation()}>
-              <div className="colors-title">Cores · Blackout Tecido Liso</div>
-              <img
-                className="cores-image"
-                src="/blackout-liso-cores.png"
-                alt="Amostras de tecido Blackout Liso: Branco, Bege, Marron, Preto"
-              />
+              <p className="cores-panel-title">Cores · Blackout Texturizado</p>
+              <img className="cores-image" src={blackoutCoresAsset.url} alt="Paleta Blackout Texturizado" />
             </div>
           </div>
         )}
 
+        {/* Lightbox – Tecido Liso cores */}
+        {showLisoCores && (
+          <div className="lightbox" role="dialog" aria-modal="true" aria-label="Cores do Blackout Tecido Liso" onClick={() => setShowLisoCores(false)}>
+            <button type="button" className="lightbox-close" aria-label="Fechar" onClick={(e) => { e.stopPropagation(); setShowLisoCores(false); }}>×</button>
+            <div className="cores-panel" onClick={(e) => e.stopPropagation()}>
+              <p className="cores-panel-title">Cores · Blackout Tecido Liso</p>
+              <img className="cores-image" src="/blackout-liso-cores.png" alt="Paleta Blackout Tecido Liso" />
+            </div>
+          </div>
+        )}
+
+        {/* WhatsApp fallback */}
         {showWaFallback && (
-          <div
-            className="lightbox"
-            role="dialog"
-            aria-modal="true"
-            aria-label="WhatsApp bloqueado"
-            onClick={() => setShowWaFallback(false)}
-          >
-            <div className="cores-panel wa-panel" onClick={(e) => e.stopPropagation()}>
-              <div className="colors-title">WhatsApp bloqueado?</div>
-              <p className="wa-text">
-                Se o WhatsApp não abriu, use o WhatsApp Web ou copie a mensagem abaixo.
-              </p>
-              <div className="wa-message">"{mensagem}"</div>
-              <div className="wa-actions">
-                <a
-                  className="link-btn primary"
-                  href={whatsappWebUrl}
-                  target="_blank"
-                  rel="noopener"
-                >
-                  <span className="label">Abrir WhatsApp Web</span>
-                </a>
-                <button type="button" className="link-btn" onClick={copiarMensagem}>
-                  <span className="label">Copiar mensagem</span>
-                </button>
-                <button
-                  type="button"
-                  className="link-btn"
-                  onClick={() => setShowWaFallback(false)}
-                >
-                  <span className="label">Fechar</span>
-                </button>
+          <div className="lightbox" role="dialog" aria-modal="true" aria-label="WhatsApp bloqueado" onClick={() => setShowWaFallback(false)}>
+            <div className="cores-panel" onClick={(e) => e.stopPropagation()}>
+              <p className="cores-panel-title">WhatsApp bloqueado?</p>
+              <p className="wa-panel-text">Se o WhatsApp não abriu, use o WhatsApp Web ou copie a mensagem.</p>
+              <div className="wa-panel-msg">"{mensagem}"</div>
+              <div className="wa-panel-actions">
+                <a className="wa-panel-btn green" href={whatsappWebUrl} target="_blank" rel="noopener">Abrir WhatsApp Web</a>
+                <button type="button" className="wa-panel-btn ghost" onClick={copiarMensagem}>Copiar mensagem</button>
+                <button type="button" className="wa-panel-btn ghost" onClick={() => setShowWaFallback(false)}>Fechar</button>
               </div>
             </div>
           </div>
         )}
-
       </div>
-
     </>
   );
 }
