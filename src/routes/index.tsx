@@ -590,7 +590,6 @@ function BioPage() {
             <div className="quick-row" role="group" aria-label="Mensagens rápidas">
               <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Gostaria de um orçamento de persianas.")}>Pedir orçamento</button>
               <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Tenho dúvidas sobre cores e modelos de persianas.")}>Dúvidas sobre cores</button>
-              <button type="button" className="quick-btn" onClick={() => openWhatsapp("Olá! Quero agendar uma visita técnica para medir.")}>Agendar visita</button>
             </div>
           </div>
 
