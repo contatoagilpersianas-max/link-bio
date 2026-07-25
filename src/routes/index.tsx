@@ -28,7 +28,7 @@ export const Route = createFileRoute("/")({
           "@type": "LocalBusiness",
           name: "Ágil Persianas",
           description: "Persianas sob medida.",
-          telephone: "+55 32 3521-0281",
+          telephone: "+55 48 3199-9811",
           areaServed: "Juiz de Fora e região",
           url: "https://agilpersianas-bio.lovable.app/",
           openingHours: "Mo-Sa 08:00-18:00",
@@ -89,7 +89,7 @@ function BioPage() {
   const [showWaFallback, setShowWaFallback] = useState(false);
   const [showLisoCores, setShowLisoCores] = useState(false);
 
-  const telefone = "553235210281";
+  const telefone = "554831999811";
   const mensagem = "Olá! Quero um orçamento de persianas";
   const buildWaUrl = (msg: string) =>
     "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(msg);
