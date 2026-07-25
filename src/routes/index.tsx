@@ -119,16 +119,16 @@ function BioPage() {
       <style>{`
         /* ─── Tokens ─────────────────────────────── */
         :root {
-          --ink:        oklch(94% 0.007 52);
-          --ink-sub:    oklch(56% 0.010 48);
-          --bg:         oklch(11% 0.010 38);
-          --bg-grad:    oklch(14% 0.012 42);
-          --surf:       oklch(16% 0.012 40);
-          --surf-2:     oklch(21% 0.014 40);
-          --border:     oklch(27% 0.015 40);
-          --gold:       oklch(76% 0.14 56);
-          --gold-dim:   oklch(63% 0.16 48);
-          --gold-glow:  oklch(76% 0.14 56 / 0.14);
+          --ink:        oklch(16% 0.010 40);
+          --ink-sub:    oklch(44% 0.010 44);
+          --bg:         oklch(97% 0.006 60);
+          --bg-grad:    oklch(95% 0.012 55);
+          --surf:       oklch(100% 0 0);
+          --surf-2:     oklch(95% 0.006 55);
+          --border:     oklch(88% 0.010 55);
+          --gold:       oklch(58% 0.18 50);
+          --gold-dim:   oklch(50% 0.18 46);
+          --gold-glow:  oklch(58% 0.18 50 / 0.10);
           --wa:         oklch(56% 0.17 150);
           --wa-dark:    oklch(46% 0.15 150);
           --radius:     12px;
@@ -315,7 +315,7 @@ function BioPage() {
           overflow: hidden;
           transition: border-color 0.25s ease;
         }
-        .product-card:hover { border-color: oklch(38% 0.020 44); }
+        .product-card:hover { border-color: oklch(72% 0.040 50); }
 
         /* Product image wrap */
         .p-img-wrap {
@@ -323,7 +323,7 @@ function BioPage() {
           width: 100%;
           aspect-ratio: 4/3;
           overflow: hidden;
-          background: oklch(9% 0.006 38);
+          background: oklch(93% 0.008 55);
         }
         .p-img-wrap img {
           width: 100%; height: 100%;
@@ -405,7 +405,7 @@ function BioPage() {
         .sw {
           width: 20px; height: 20px;
           border-radius: 50%;
-          box-shadow: 0 0 0 2px var(--surf), 0 0 0 3px oklch(100% 0 0 / 0.18);
+          box-shadow: 0 0 0 2px var(--surf), 0 0 0 3px oklch(0% 0 0 / 0.14);
         }
 
         /* Product CTA */
@@ -483,7 +483,7 @@ function BioPage() {
         /* WA Fallback */
         .wa-panel-text { font-size: 0.88rem; color: var(--ink-sub); margin: 0 0 12px; text-align: center; }
         .wa-panel-msg {
-          background: oklch(11% 0.010 38);
+          background: var(--surf-2);
           border: 1px solid var(--border);
           border-radius: 10px; padding: 12px;
           font-size: 0.88rem; color: var(--ink);
@@ -506,7 +506,7 @@ function BioPage() {
         /* ─── Footer ─────────────────────────────── */
         .bio-footer {
           margin-top: 48px;
-          color: oklch(34% 0.008 44);
+          color: oklch(64% 0.008 44);
           font-size: 0.72rem;
           font-weight: 500;
           text-align: center;
