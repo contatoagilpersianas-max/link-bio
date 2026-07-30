@@ -6,10 +6,10 @@ import blackoutCoresAsset from "@/assets/blackout-cores2.png.asset.json";
 export const Route = createFileRoute("/")({
   head: () => ({
     meta: [
-      { title: "Ágil Persianas · Persianas sob medida em Juiz de Fora" },
-      { name: "description", content: "Persianas sob medida em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
+      { title: "Ágil Persianas · Persianas e cortinas sob medida" },
+      { name: "description", content: "Persianas e cortinas sob medida com envio para todo o Brasil. Orçamento rápido pelo WhatsApp." },
       { property: "og:title", content: "Ágil Persianas · Persianas sob medida" },
-      { property: "og:description", content: "Persianas sob medida em Juiz de Fora e região. Orçamento rápido pelo WhatsApp." },
+      { property: "og:description", content: "Persianas e cortinas sob medida com envio para todo o Brasil. Orçamento rápido pelo WhatsApp." },
       { property: "og:type", content: "website" },
       { property: "og:url", content: "https://agilpersianas-bio.lovable.app/" },
       { name: "twitter:card", content: "summary_large_image" },
@@ -27,9 +27,9 @@ export const Route = createFileRoute("/")({
           "@context": "https://schema.org",
           "@type": "LocalBusiness",
           name: "Ágil Persianas",
-          description: "Persianas sob medida.",
-          telephone: "+55 48 3199-9811",
-          areaServed: "Juiz de Fora e região",
+          description: "Persianas e cortinas sob medida, com envio para todo o Brasil.",
+          telephone: "+55 48 99159-3601",
+          areaServed: "BR",
           url: "https://agilpersianas-bio.lovable.app/",
           openingHours: "Mo-Sa 08:00-18:00",
         }),
@@ -89,7 +89,7 @@ function BioPage() {
   const [showWaFallback, setShowWaFallback] = useState(false);
   const [showLisoCores, setShowLisoCores] = useState(false);
 
-  const telefone = "554831999811";
+  const telefone = "5548991593601";
   const mensagem = "Olá! Quero um orçamento de persianas";
   const buildWaUrl = (msg: string) =>
     "https://api.whatsapp.com/send?phone=" + telefone + "&text=" + encodeURIComponent(msg);
@@ -262,30 +262,6 @@ function BioPage() {
         .wa-cta .label { flex: 1; text-align: left; }
         .wa-cta .sub { display: block; font-weight: 400; font-size: 0.8rem; opacity: 0.82; margin-top: 2px; }
 
-        /* Quick shortcuts */
-        .quick-row {
-          display: flex;
-          gap: 8px;
-          width: 100%;
-        }
-        .quick-btn {
-          flex: 1;
-          min-height: 50px;
-          padding: 8px 6px;
-          border-radius: 10px;
-          border: 1px solid var(--border);
-          background: var(--surf);
-          color: var(--ink-sub);
-          font-family: 'Barlow', system-ui, sans-serif;
-          font-size: 0.74rem;
-          font-weight: 600;
-          line-height: 1.3;
-          cursor: pointer;
-          text-align: center;
-          transition: border-color 0.2s ease, color 0.2s ease, background 0.2s ease;
-        }
-        .quick-btn:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-glow); }
-        .quick-btn:active { transform: scale(0.97); }
 
         /* ─── Catalog ────────────────────────────── */
         .catalog-section {
@@ -514,16 +490,38 @@ function BioPage() {
         .wa-panel-btn.green { background: linear-gradient(135deg, var(--wa), var(--wa-dark)); color: white; }
         .wa-panel-btn.ghost { background: var(--surf-2); color: var(--ink); border: 1px solid var(--border); }
 
-        /* ─── Footer ─────────────────────────────── */
-        .bio-footer {
-          margin-top: 48px;
-          color: oklch(64% 0.008 44);
-          font-size: 0.72rem;
-          font-weight: 500;
-          text-align: center;
-          letter-spacing: 0.07em;
-          text-transform: uppercase;
+        /* ─── Closing footer ─────────────────────── */
+        .bio-footer-close {
+          margin-top: 52px;
+          width: 100%;
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 14px;
+          padding-top: 28px;
+          border-top: 1px solid var(--border);
         }
+        .bio-footer-sub {
+          font-size: 0.78rem;
+          color: var(--ink-sub);
+          text-align: center;
+          margin: 0;
+        }
+        .wa-close-link {
+          display: inline-flex;
+          align-items: center;
+          gap: 8px;
+          font-family: 'Barlow', system-ui, sans-serif;
+          font-size: 0.88rem;
+          font-weight: 700;
+          color: var(--wa);
+          text-decoration: none;
+          padding: 10px 22px;
+          border-radius: 10px;
+          border: 1px solid oklch(56% 0.17 150 / 0.30);
+          transition: background 0.2s ease;
+        }
+        .wa-close-link:hover { background: oklch(56% 0.17 150 / 0.08); }
 
         /* ─── Animations ─────────────────────────── */
         @keyframes rise {
@@ -545,11 +543,11 @@ function BioPage() {
         .trust-bar    { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.23s forwards; }
         .links        { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.30s forwards; }
         .catalog-section { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.38s forwards; }
-        .bio-footer   { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.44s forwards; }
+        .bio-footer-close { opacity:0; animation: rise 0.6s cubic-bezier(0.22,1,0.36,1) 0.44s forwards; }
 
         @media (prefers-reduced-motion: reduce) {
           .avatar-ring, .bio-name, .bio-tagline, .trust-bar,
-          .links, .catalog-section, .bio-footer {
+          .links, .catalog-section, .bio-footer-close {
             animation: none !important; opacity: 1 !important; transform: none !important;
           }
           .wa-cta::after { animation: none; }
